@@ -1,10 +1,10 @@
 import { Text, View } from "react-native";
 
-export default function HomeTab(){
+export default function RegistrationsTab(){
     
     return(
         <View>
-            <Text>Hjem</Text>
+            <Text>Favoritter</Text>
         </View>
     )
 }
