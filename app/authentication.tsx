@@ -1,3 +1,4 @@
+import { signInWithGoogle } from "@/api/authApi";
 import { useAuthSession } from "@/providers/authctx";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
@@ -15,8 +16,8 @@ const Authentication = () => {
   return (
     <View style={styles.mainContainer}>
       {/* Dugnadhub Logo */}
-      <View>
-        <Text>DugnadHub</Text>
+      <View style={styles.logo}>
+        <Text style={styles.logoText}>DugnadHub</Text>
       </View>
 
       {/* Login or register user*/}
@@ -66,6 +67,18 @@ const Authentication = () => {
           <Text> {isSignedUp ? "Log inn" : "Registrer bruker"}</Text>
         </Pressable>
 
+        {/* Log in with google */}
+
+        <Pressable
+          onPress={async () => {
+            await signInWithGoogle();
+          }}
+        > 
+        <Text>
+            Logg inn med google
+          </Text>
+        </Pressable>
+
         {/* Swap between login ang register button */}
         <Pressable
           onPress={() => {
@@ -89,4 +102,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
+  logo: {
+   margin: 20,
+   padding: 20,
+   borderRadius: 8,
+   borderWidth: 3,
+   borderColor: "#a73270ff"
+  },
+
+  logoText: {
+    color: "#0D0D0D",
+    fontSize: 30,
+    fontWeight: "bold"
+  }
+
 });
