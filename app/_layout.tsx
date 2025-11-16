@@ -1,10 +1,11 @@
-import { Stack } from 'expo-router';
+import { AuthSessionProvider } from "@/providers/authctx";
+import { Slot } from "expo-router";
 
-export default function RootLayout() {
-
-  return (
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-  );
+export default function AuthSessionLayout() {
+    return(
+        <AuthSessionProvider>
+            <Slot/>
+        </AuthSessionProvider>
+    )
 }
+

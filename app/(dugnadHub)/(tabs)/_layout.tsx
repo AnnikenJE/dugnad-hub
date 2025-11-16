@@ -4,12 +4,13 @@ import { Tabs } from "expo-router";
 export default function TabBar() {
 
   return (
-    <Tabs screenOptions={{ title: "hjem" }}>
+    <Tabs screenOptions={{ title: "hjem"}}>
+      
       <Tabs.Screen
         name="index"
         options={{
           title: "Hjem",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <FontAwesome name="home" size={24} color="black" />
           ),
         }}
@@ -19,7 +20,7 @@ export default function TabBar() {
         name="registrations"
         options={{
           title: "Mine Dugnader",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon:() => (
             <FontAwesome name="list-ul" size={24} color="black" />
           ),
         }}
@@ -29,7 +30,7 @@ export default function TabBar() {
         name="profile"
         options={{
           title: "Profil",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <FontAwesome name="user" size={24} color="black" />
           ),
         }}

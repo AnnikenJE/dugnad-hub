@@ -38,6 +38,7 @@ yarn-error.*
 
 app-example
 firebaseEnv.js
+firebaseConfig.js
 GoogleService-Info.plist
 ios/
 android/
