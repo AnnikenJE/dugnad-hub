@@ -1,33 +1,39 @@
+
+// Authentication with login and register user
+
 import { signInWithGoogle } from "@/api/authApi";
 import { useAuthSession } from "@/providers/authctx";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-// TODO: Bytte filnavn til authentication senere?
-
 const Authentication = () => {
+  // State
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignedUp, setIsSignedUp] = useState(true);
 
+  // Hooks
   const { signIn, createUser } = useAuthSession();
 
+  // Return
   return (
     <View style={styles.mainContainer}>
       {/* Dugnadhub Logo */}
       <View style={styles.logo}>
         <Text style={styles.logoText}>DugnadHub</Text>
       </View>
-
+      {/* Login title */}
+      <Text style={{ fontWeight: "bold", padding: 8 }}>
+        {isSignedUp ? "Logg in" : "Opprett bruker"}
+      </Text>
       {/* Login or register user*/}
       <View>
-        <Text> {isSignedUp ? "Logg in" : "Opprett bruker"}</Text>
-
         {/* Email */}
         <View>
           <Text>Epost</Text>
           <TextInput
+            style={styles.textField}
             value={userEmail}
             onChangeText={setUserEmail}
             placeholder="E-post"
@@ -39,6 +45,7 @@ const Authentication = () => {
           <View>
             <Text>Brukernavn</Text>
             <TextInput
+              style={styles.textField}
               value={userName}
               onChangeText={setUserName}
               placeholder="Brukernavn"
@@ -49,13 +56,16 @@ const Authentication = () => {
         <View>
           <Text>Passord</Text>
           <TextInput
+            style={styles.textField}
             value={password}
             onChangeText={setPassword}
             placeholder="Passord"
+            secureTextEntry
           ></TextInput>
         </View>
         {/* Login or register user button */}
         <Pressable
+          style={[styles.button, { backgroundColor: "#814494ff" }]}
           onPress={() => {
             if (isSignedUp) {
               signIn(userEmail, password);
@@ -64,17 +74,23 @@ const Authentication = () => {
             }
           }}
         >
-          <Text> {isSignedUp ? "Log inn" : "Registrer bruker"}</Text>
+          <Text
+            style={{ color: "white", textAlign: "center", fontWeight: "bold" }}
+          >
+            {isSignedUp ? "Logg inn" : "Registrer bruker"}
+          </Text>
         </Pressable>
 
         {/* Log in with google */}
-
         <Pressable
+          style={[styles.button, { backgroundColor: "#d42525ff" }]}
           onPress={async () => {
             await signInWithGoogle();
           }}
-        > 
-        <Text>
+        >
+          <Text
+            style={{ color: "white", textAlign: "center", fontWeight: "bold" }}
+          >
             Logg inn med google
           </Text>
         </Pressable>
@@ -85,7 +101,13 @@ const Authentication = () => {
             setIsSignedUp(!isSignedUp);
           }}
         >
-          <Text>
+          <Text
+            style={{
+              textDecorationLine: "underline",
+              textAlign: "center",
+              margin: 8,
+            }}
+          >
             {isSignedUp ? "Registrer bruker" : "Har du allerede en bruker?"}
           </Text>
         </Pressable>
@@ -96,6 +118,7 @@ const Authentication = () => {
 
 export default Authentication;
 
+// Design
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -104,17 +127,31 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-   margin: 20,
-   padding: 20,
-   borderRadius: 8,
-   borderWidth: 3,
-   borderColor: "#a73270ff"
+    margin: 8,
+    padding: 20,
+    borderBottomWidth: 3,
+    borderTopWidth: 3,
+    borderColor: "#814494ff",
   },
 
   logoText: {
     color: "#0D0D0D",
     fontSize: 30,
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 
+  button: {
+    padding: 8,
+    margin: 8,
+    borderRadius: 8,
+  },
+
+  textField: {
+    padding: 8,
+    margin: 8,
+    borderColor: "lightgray",
+    borderWidth: 2,
+    borderRadius: 8,
+    width: 200,
+  },
 });

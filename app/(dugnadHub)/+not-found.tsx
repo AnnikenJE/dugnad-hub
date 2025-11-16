@@ -8,6 +8,8 @@ export default function PageNotFoundScreen() {
         </View>
     )
 }
+
+// Design
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,

@@ -10,7 +10,7 @@ export default function TabBar() {
         name="index"
         options={{
           title: "Hjem",
-          tabBarIcon: () => (
+          tabBarIcon: ({ color }) => (
             <FontAwesome name="home" size={24} color="black" />
           ),
         }}
@@ -20,7 +20,7 @@ export default function TabBar() {
         name="registrations"
         options={{
           title: "Mine Dugnader",
-          tabBarIcon:() => (
+          tabBarIcon: ({ color }) => (
             <FontAwesome name="list-ul" size={24} color="black" />
           ),
         }}
@@ -30,7 +30,7 @@ export default function TabBar() {
         name="profile"
         options={{
           title: "Profil",
-          tabBarIcon: () => (
+          tabBarIcon: ({ color }) => (
             <FontAwesome name="user" size={24} color="black" />
           ),
         }}
