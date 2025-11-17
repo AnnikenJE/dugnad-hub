@@ -6,6 +6,7 @@ import { signInWithGoogle } from "@/api/authApi";
 import { useAuthSession } from "@/providers/authctx";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Colors } from "@/styles/colors";
 
 const Authentication = () => {
   // State
@@ -66,7 +67,7 @@ const Authentication = () => {
         </View>
         {/* Login or register user button */}
         <Pressable
-          style={[styles.button, { backgroundColor: "#814494ff" }]}
+          style={[styles.button, { backgroundColor: Colors.mainColor }]}
           onPress={() => {
             if (isSignedUp) {
               signIn(userEmail, password);
@@ -84,7 +85,7 @@ const Authentication = () => {
 
         {/* Log in with google */}
         <Pressable
-          style={[styles.button, { backgroundColor: "#d42525ff" }]}
+          style={[styles.button, { backgroundColor: Colors.googleRed }]}
           onPress={async () => {
             await signInWithGoogle();
           }}
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth: 3,
     borderTopWidth: 3,
-    borderColor: "#814494ff",
+    borderColor: Colors.mainColor,
   },
 
   logoText: {
