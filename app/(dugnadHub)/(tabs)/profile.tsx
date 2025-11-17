@@ -1,21 +1,22 @@
 import { useAuthSession } from "@/providers/authctx";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export default function ProfileTab(){
-    
-    const { signOut } = useAuthSession()
+export default function ProfileTab() {
+  const { signOut } = useAuthSession();
 
-    return(
-        <View style={styles.mainContainer}>
-            <Text>Profil</Text>
-            <Pressable onPress={() => {signOut()}}>
-                <Text>
-                    Logg ut
-                </Text>
-            </Pressable>
-
-        </View>
-    )
+  return (
+    <View style={styles.mainContainer}>
+      <Text>Profil</Text>
+      <Text>Mine påmeldte dugnader</Text>
+      <Pressable
+        onPress={() => {
+          signOut();
+        }}
+      >
+        <Text>Logg ut</Text>
+      </Pressable>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
