@@ -1,9 +1,11 @@
 import { useAuthSession } from "@/providers/authctx";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+// ----------------------------------
 export default function ProfileTab() {
   const { signOut } = useAuthSession();
 
+  // Return ----------------------------------
   return (
     <View style={styles.mainContainer}>
       <Text>Profil</Text>
@@ -19,6 +21,7 @@ export default function ProfileTab() {
   );
 }
 
+// Style ----------------------------------
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,

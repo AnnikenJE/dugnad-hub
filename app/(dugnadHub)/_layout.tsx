@@ -2,6 +2,7 @@ import { useAuthSession } from "@/providers/authctx";
 import { Redirect, Stack } from "expo-router";
 import { Text, View } from "react-native";
 
+// ----------------------------------
 export default function AppLayout() {
   const { user, isLoading } = useAuthSession();
 
@@ -17,6 +18,7 @@ export default function AppLayout() {
     return <Redirect href={"/authentication"} />;
   }
 
+  // Return ----------------------------------
   return (
     <Stack>
       <Stack.Screen

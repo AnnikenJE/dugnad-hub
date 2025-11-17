@@ -1,7 +1,9 @@
 import { Text, View, StyleSheet } from "react-native";
 
+// ----------------------------------
 export default function RegistrationsTab(){
     
+  //  Return ----------------------------------
     return(
         <View style={styles.mainContainer}>
             <Text>Mine dugnader</Text>
@@ -9,6 +11,7 @@ export default function RegistrationsTab(){
     )
 }
 
+// Style ----------------------------------
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,

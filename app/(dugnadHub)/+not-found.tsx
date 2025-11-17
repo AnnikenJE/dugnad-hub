@@ -4,6 +4,7 @@ import { Colors } from "@/styles/colors";
 import { Link } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 
+// ----------------------------------
 export default function PageNotFoundScreen() {
   return (
     <View style={styles.mainContainer}>
@@ -15,7 +16,7 @@ export default function PageNotFoundScreen() {
   );
 }
 
-// Design
+// Style ----------------------------------
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,

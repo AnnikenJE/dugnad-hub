@@ -1,6 +1,9 @@
+// Images connection to firebase
+
 import { getStorageRef } from "@/firebaseConfig";
 import { uploadBytesResumable } from "firebase/storage";
 
+// ----------------------------------
 export async function uploadImage(uri: string) {
   const fetchResponse = await fetch(uri);
   const blob = await fetchResponse.blob();

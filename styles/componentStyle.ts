@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 
+//  Reusable styles----------------------------------
 export const Styles = StyleSheet.create({
   textField: {
     padding: 8,
@@ -10,7 +11,7 @@ export const Styles = StyleSheet.create({
     width: 200,
   },
 
-  mainContainer: {
+  centerContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

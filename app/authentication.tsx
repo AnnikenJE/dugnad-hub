@@ -1,13 +1,13 @@
-
 // Authentication with login and register user
 // Login with google only works on iOS and not web
 
 import { signInWithGoogle } from "@/api/authApi";
 import { useAuthSession } from "@/providers/authctx";
+import { Colors } from "@/styles/colors";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { Colors } from "@/styles/colors";
 
+// ----------------------------------
 const Authentication = () => {
   // State
   const [userName, setUserName] = useState("");
@@ -18,7 +18,7 @@ const Authentication = () => {
   // Hooks
   const { signIn, createUser } = useAuthSession();
 
-  // Return
+  // Return ----------------------------------
   return (
     <View style={styles.mainContainer}>
       {/* Dugnadhub Logo */}
@@ -117,10 +117,10 @@ const Authentication = () => {
     </View>
   );
 };
-
+// ----------------------------------
 export default Authentication;
 
-// Design
+// Style ----------------------------------
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,

@@ -1,3 +1,5 @@
+// Autentisering
+
 import { createUser, setUserDisplayName, signIn, signOut } from "@/api/authApi";
 import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";
@@ -10,6 +12,7 @@ import {
   useState,
 } from "react";
 
+// ----------------------------------
 type AuthContextType = {
   signIn: (userEmail: string, password: string) => void;
   signOut: VoidFunction;
@@ -31,6 +34,7 @@ export function useAuthSession() {
   return value;
 }
 
+// ----------------------------------
 export function AuthSessionProvider({ children }: { children: ReactNode }) {
   const [userSession, setUserSession] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -57,6 +61,7 @@ export function AuthSessionProvider({ children }: { children: ReactNode }) {
     router.replace("/");
   }, [isLoading, router, userSession]);
 
+  // Return ----------------------------------
   return (
     <AuthContext
       value={{

@@ -1,11 +1,12 @@
+// Tab bar layout
+
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 
+// ----------------------------------
 export default function TabBar() {
-
   return (
-    <Tabs screenOptions={{ title: "hjem"}}>
-      
+    <Tabs screenOptions={{ title: "hjem" }}>
       <Tabs.Screen
         name="index"
         options={{

@@ -1,3 +1,5 @@
+// Authentication connection to firebase
+
 import { auth } from "@/firebaseConfig";
 import {
   GoogleSignin,
@@ -12,6 +14,7 @@ import {
   User,
 } from "firebase/auth";
 
+// ----------------------------------
 export async function signIn(email: string, password: string) {
   await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {

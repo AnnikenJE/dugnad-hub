@@ -2,12 +2,15 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import { useRef } from "react";
 import { Button, Text, View, TouchableOpacity } from "react-native";
+import * as Styles from "@/styles/componentStyle";
 
+// Props ----------------------------------
 type ImageSelectionModalProps = {
   closeModal: VoidFunction;
   setImage: (image: string) => void;
 };
 
+// ----------------------------------
 export default function ImageSelectionModal({
   closeModal,
   setImage,
@@ -22,7 +25,7 @@ export default function ImageSelectionModal({
 
   if (!permission.granted) {
     return (
-      <View>
+      <View style={Styles.Styles.centerContainer}>
         <Text>DugnadHub trenger tillatelse til å bruke kameraet.</Text>
         <Button onPress={requestPermission} title="Aksepter" />
       </View>
@@ -52,10 +55,10 @@ export default function ImageSelectionModal({
     }
   }
 
-
+// Return ----------------------------------
   return (
-    <View >
-      <CameraView facing="back" ref={cameraRef} />
+    <View style={Styles.Styles.centerContainer}>
+      <CameraView style={{ flex: 1}}facing="back" ref={cameraRef} />
       <View >
         <TouchableOpacity onPress={() => closeModal()}>
           <Text>Avbryt</Text>
