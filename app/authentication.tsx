@@ -1,5 +1,6 @@
 
 // Authentication with login and register user
+// Login with google only works on iOS and not web
 
 import { signInWithGoogle } from "@/api/authApi";
 import { useAuthSession } from "@/providers/authctx";

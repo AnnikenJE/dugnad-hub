@@ -8,6 +8,7 @@ export default function HomeTab(){
     return(
         <View style={styles.mainContainer}>
             <Text>Hjem</Text>
+           
         </View>
     )
 }
