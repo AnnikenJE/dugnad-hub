@@ -4,6 +4,7 @@
 import { signInWithGoogle } from "@/api/authApi";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
+import { Styles } from "@/styles/componentStyle";
 import { useState } from "react";
 import {
   Alert,
@@ -72,7 +73,7 @@ const Authentication = () => {
         </View>
         {/* Login or register user button */}
         <Pressable
-          style={[styles.button, { backgroundColor: Colors.mainColor }]}
+          style={[Styles.button, { backgroundColor: Colors.mainColor }]}
           onPress={() => {
             // Check if user wants to sign up or log in.
             if (isSignedUp) {
@@ -100,7 +101,7 @@ const Authentication = () => {
 
         {/* Log in with google */}
         <Pressable
-          style={[styles.button, { backgroundColor: Colors.googleRed }]}
+          style={[Styles.button, { backgroundColor: Colors.googleRed }]}
           onPress={async () => {
             await signInWithGoogle();
           }}
@@ -157,11 +158,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  button: {
-    padding: 8,
-    margin: 8,
-    borderRadius: 8,
-  },
+
 
   textField: {
     padding: 8,

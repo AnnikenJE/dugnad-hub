@@ -1,6 +1,7 @@
 // Modal for making events (dugnad)
 
 import * as eventApi from "@/api/eventApi";
+import { useAuthSession } from "@/providers/authctx";
 import * as Styles from "@/styles/componentStyle";
 import { EventData } from "@/types/event";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -29,17 +30,17 @@ export default function EventFormModal({
   setIsVisible,
   confirmEventAdded,
 }: EventModalProps) {
-  // State
+  const { user } = useAuthSession();
   const [eventTitle, setEventTitle] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [isChoosingImage, setIsChoosingImage] = useState(false);
   const [description, setDescription] = useState("");
   const [tasks, setTasks] = useState("");
-  const [category, setCategory] = useState("")
-  const [date, setDate] = useState("")
-  const [time, setTime] = useState("")
-  const [maxParticipants, setMaxParticipants] = useState(0)
-  const [participants, setParticipants] = useState<string[]>([])
+  const [category, setCategory] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [maxParticipants, setMaxParticipants] = useState(0);
+  const [participants, setParticipants] = useState<string[]>([]);
 
   // Return ----------------------------------
   return (
@@ -77,7 +78,8 @@ export default function EventFormModal({
           onPress={async () => {
             if (image) {
               const newEvent: EventData = {
-                id: eventTitle + description, // TODO: KAN IKKE SE SLIK UT
+                id: eventTitle + description, // TODO: Fikse?
+                authorId: user?.uid || "Something went wrong.",
                 title: eventTitle,
                 imageUri: image,
                 description: description,
@@ -86,7 +88,7 @@ export default function EventFormModal({
                 date: date,
                 time: time,
                 maxParticipants: maxParticipants,
-                participants: participants
+                participants: participants,
               };
 
               await eventApi.createEvent(newEvent);

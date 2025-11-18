@@ -1,6 +1,7 @@
 // Events (dugnad) interface
 export interface EventData{
     id: string
+    authorId: string
     title: string
     imageUri: string
     description: string

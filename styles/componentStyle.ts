@@ -16,4 +16,10 @@ export const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
+    button: {
+    padding: 8,
+    margin: 8,
+    borderRadius: 8,
+  },
 });
