@@ -1,18 +1,27 @@
+//
+//
 // Tab bar layout
 
+import { Colors } from "@/styles/colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 
 // ----------------------------------
 export default function TabBar() {
   return (
-    <Tabs screenOptions={{ title: "hjem" }}>
+    <Tabs
+      screenOptions={{
+        title: "hjem",
+        tabBarActiveTintColor: Colors.mainColor,
+        tabBarInactiveTintColor: Colors.gray,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: "Hjem",
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="home" size={24} color="black" />
+            <FontAwesome name="home" size={24} color={color} />
           ),
         }}
       />
@@ -22,7 +31,7 @@ export default function TabBar() {
         options={{
           title: "Mine Dugnader",
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="list-ul" size={24} color="black" />
+            <FontAwesome name="list-ul" size={24} color={color} />
           ),
         }}
       />
@@ -32,7 +41,7 @@ export default function TabBar() {
         options={{
           title: "Profil",
           tabBarIcon: ({ color }) => (
-            <FontAwesome name="user" size={24} color="black" />
+            <FontAwesome name="user" size={24} color={color} />
           ),
         }}
       />
