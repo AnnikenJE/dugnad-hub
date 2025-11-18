@@ -5,17 +5,22 @@ import { signInWithGoogle } from "@/api/authApi";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 // ----------------------------------
 const Authentication = () => {
-  // State
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignedUp, setIsSignedUp] = useState(true);
 
-  // Hooks
   const { signIn, createUser } = useAuthSession();
 
   // Return ----------------------------------
@@ -69,9 +74,19 @@ const Authentication = () => {
         <Pressable
           style={[styles.button, { backgroundColor: Colors.mainColor }]}
           onPress={() => {
+            // Check if user wants to sign up or log in.
             if (isSignedUp) {
               signIn(userEmail, password);
             } else {
+              if (userEmail === "" || password === "" || userName === "") {
+                // Source: https://reactnative.dev/docs/alert
+                Alert.alert(
+                  "Kunne ikke lage bruker",
+                  "Vennligst fyll ut alle feltene.",
+                  [{ text: "Ok" }]
+                );
+                return;
+              }
               createUser(userEmail, password, userName);
             }
           }}

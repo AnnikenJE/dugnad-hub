@@ -1,6 +1,7 @@
 // Events in index(home)
 
 import { EventData } from "@/types/event";
+import { router } from "expo-router";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 // Props ----------------------------------
@@ -14,7 +15,14 @@ export default function Event({ eventData }: EventProps) {
   return (
     <Pressable
       style={style.container}
-      //TODO:
+     onPress={() => {
+        router.push({
+                    pathname: "/event-details/[id]",
+                    params:{id: eventData.id}
+        })
+
+
+     }}
     >
       <View>
         <Image

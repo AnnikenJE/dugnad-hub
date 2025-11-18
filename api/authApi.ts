@@ -13,14 +13,24 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
+import { Alert } from "react-native";
 
 // ----------------------------------
 export async function signIn(email: string, password: string) {
-  await signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log("Current user signed in: ", userCredential);
-    })
-    .catch((error) => console.log("User could not sign in.", error));
+  try {
+    await signInWithEmailAndPassword(auth, email, password).then(
+      (userCredential) => {
+        console.log("Current user signed in: ", userCredential);
+      }
+    );
+  } catch (error) {
+    console.error("User could not sign in.", error);
+    Alert.alert(
+      "Ugyldig innlogging",
+      "Brukernavn eller passord stemmer ikke.",
+      [{ text: "ok" }]
+    );
+  }
 }
 
 export async function signOut() {
