@@ -47,7 +47,6 @@ export async function getAllEvents() {
   }
 }
 
-// ikke brukt enda
 // Get events from firestore by id
 export async function getEventById(id: string) {
   try {

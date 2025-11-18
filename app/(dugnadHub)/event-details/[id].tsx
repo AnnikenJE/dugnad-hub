@@ -2,9 +2,9 @@ import * as eventApi from "@/api/eventApi";
 import { Colors } from "@/styles/colors";
 import * as Style from "@/styles/componentStyle";
 import { EventData } from "@/types/event";
-import { router, Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
 
 export default function EventDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -20,8 +20,8 @@ export default function EventDetails() {
     getEventFromApi(id);
   }, [id]);
 
+  console.log(event?.imageUri);
 
-  
   if (event === null) {
     return (
       <View style={Style.Styles.centerContainer}>
@@ -32,19 +32,67 @@ export default function EventDetails() {
   }
 
   return (
+    <View style={{ flex: 1 }}>
+      <Stack.Screen
+        options={{
+          headerTintColor: Colors.mainColor,
+          title: event.title,
+          headerBackTitle: "Tilbake",
+        }}
+      />
+      <Image style={style.image} source={{ uri: event.imageUri }} />
+      <View style={style.textContainer}>
+        <Text
+          style={{
+            color: Colors.mainColor,
+            fontWeight: "bold",
+            fontSize: 20,
+            textDecorationLine: "underline",
+          }}
+        >
+          {event.title}
+        </Text>
 
-    <View style={Style.Styles.centerContainer}>
-          <Stack.Screen 
-          options={{
-            title: event.title,
-            headerBackTitle: "Tilbake"
-          }}/>
-      <View>
-        <Text>{event.title}</Text>
+        <View style={{ paddingBottom: 30 }}>
+          <View style={{ padding: 30 }}>
+            <View style={{ marginBottom: 10 }}>
+              <Text style={{ fontWeight: "bold" }}>
+                Dato: {event.date} Kl.{event.time}
+              </Text>
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <Text>{event.description}</Text>
+            </View>
+
+            <Text>Kategori: {event.category}</Text>
+
+            <Text>Adresse: {event.adress}</Text>
+            <Text>Opprettet av:{event.authorName}</Text>
+            <Text>Oppgaver:{event.tasks}</Text>
+
+            <Text>
+              Plasser:{event.participants.length} / {event.maxParticipants}
+            </Text>
+          </View>
+        </View>
       </View>
-      <Pressable onPress={() => router.back()}>
-        <Text>Gå tilbake</Text>
-      </Pressable>
     </View>
   );
 }
+
+const style = StyleSheet.create({
+  image: {
+    height: 300,
+    width: "100%",
+    borderRadius: 8,
+    padding: 8,
+  },
+  textContainer: {
+    alignItems: "center",
+    padding: 4,
+    borderWidth: 3,
+    borderColor: Colors.mainColorLight,
+    margin: 30,
+    borderRadius: 16,
+  },
+});

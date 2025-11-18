@@ -40,6 +40,7 @@ export default function Event({ eventData }: EventProps) {
               fontWeight: "bold",
               textAlign: "center",
               fontSize: 15,
+              color: Colors.mainColor
             }}
           >
             {eventData.title}
