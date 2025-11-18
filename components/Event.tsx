@@ -20,8 +20,6 @@ export default function Event({ eventData }: EventProps) {
                     pathname: "/event-details/[id]",
                     params:{id: eventData.id}
         })
-
-
      }}
     >
       <View>

@@ -8,7 +8,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function PageNotFoundScreen() {
   return (
     <View style={styles.mainContainer}>
-      <Text> Siden ble ikke funnet :( </Text>
+      <Text style={{color: "red"}}> Siden ble ikke funnet :( </Text>
       <Link href="/" style={{textDecorationLine: "underline" , color: Colors.mainColor}}> 
         <Text>Klikk her for å gå tilbake.</Text>
       </Link>

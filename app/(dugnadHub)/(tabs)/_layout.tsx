@@ -14,6 +14,11 @@ export default function TabBar() {
         title: "hjem",
         tabBarActiveTintColor: Colors.mainColor,
         tabBarInactiveTintColor: Colors.gray,
+        headerTitleStyle: {
+          fontWeight: "bold",
+          color: Colors.mainColor,
+          fontSize: 25
+        }
       }}
     >
       <Tabs.Screen

@@ -19,7 +19,13 @@ export default function ProfileTab() {
                 signOut();
               }}
             >
-              <Text style={{ color: Colors.mainColor, fontWeight: "bold" }}>
+              <Text
+                style={{
+                  color: Colors.mainColor,
+                  fontWeight: "bold",
+                  textDecorationLine: "underline",
+                }}
+              >
                 Logg ut
               </Text>
             </Pressable>

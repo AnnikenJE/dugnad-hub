@@ -3,7 +3,9 @@
 import * as eventApi from "@/api/eventApi";
 import Event from "@/components/Event";
 import EventFormModal from "@/components/EventFormModal";
+import { Colors } from "@/styles/colors";
 import { EventData } from "@/types/event";
+import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   FlatList,
@@ -16,7 +18,6 @@ import {
 
 // ----------------------------------
 export default function HomeTab() {
-
   const [events, setEvents] = useState<EventData[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -35,10 +36,22 @@ export default function HomeTab() {
   // Return ----------------------------------
   return (
     <View style={styles.mainContainer}>
+      <Stack.Screen
+        options={{
+          headerRight: () => (
+            <Pressable
+              style={{ paddingRight: 16, }}
+              onPress={() => setIsModalVisible(true)}
+            >
+              <Text style={{ color: Colors.mainColor, fontWeight: "bold", textDecorationLine:"underline" }}>
+                Ny event
+              </Text>
+            </Pressable>
+          ),
+        }}
+      />
       <Text>Hjem</Text>
-      <Pressable onPress={() => setIsModalVisible(true)}>
-        <Text> Lag en event</Text>
-      </Pressable>
+
       <FlatList
         data={events}
         refreshControl={
