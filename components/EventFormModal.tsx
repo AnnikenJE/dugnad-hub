@@ -47,7 +47,6 @@ export default function EventFormModal({
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [maxParticipants, setMaxParticipants] = useState("");
-  const [participants, setParticipants] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   // Return ----------------------------------
@@ -114,7 +113,7 @@ export default function EventFormModal({
             <View>
               <Text>Beskrivelse</Text>
               <TextInput
-                style={[Styles.Styles.textField, { width: 300 }]}
+                style={Styles.Styles.textField}
                 value={description}
                 onChangeText={setDescription}
                 placeholder="Dugnaden går ut på.."
@@ -204,7 +203,6 @@ export default function EventFormModal({
 
                     if (image) {
                       setIsLoading(true);
-                      setParticipants([user?.uid || "Anonym"]);
                       const newEvent: EventData = {
                         // Source: https://www.npmjs.com/package/react-native-uuid
                         id: uuid.v4(),
@@ -219,7 +217,7 @@ export default function EventFormModal({
                         date: date,
                         time: time,
                         maxParticipants: parseInt(maxParticipants),
-                        participants: participants,
+                        participants: [user?.uid || "Something went wrong."],
                       };
 
                       await eventApi.createEvent(newEvent);
@@ -236,7 +234,6 @@ export default function EventFormModal({
                       setDate("");
                       setTime("");
                       setMaxParticipants("");
-                      setParticipants([]);
                     }
                   }}
                 >

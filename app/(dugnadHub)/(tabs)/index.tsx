@@ -40,18 +40,22 @@ export default function HomeTab() {
         options={{
           headerRight: () => (
             <Pressable
-              style={{ paddingRight: 16, }}
+              style={{ paddingRight: 16 }}
               onPress={() => setIsModalVisible(true)}
             >
-              <Text style={{ color: Colors.mainColor, fontWeight: "bold", textDecorationLine:"underline" }}>
-                Ny event
+              <Text
+                style={{
+                  color: Colors.mainColor,
+                  fontWeight: "bold",
+                  textDecorationLine: "underline",
+                }}
+              >
+                Lag event
               </Text>
             </Pressable>
           ),
         }}
       />
-      <Text>Hjem</Text>
-
       <FlatList
         data={events}
         refreshControl={
@@ -60,7 +64,6 @@ export default function HomeTab() {
             onRefresh={getEventsFromApi}
           />
         }
-        ItemSeparatorComponent={() => <View style={{ height: 16 }}></View>}
         renderItem={(event) => <Event eventData={event.item}></Event>}
       ></FlatList>
 

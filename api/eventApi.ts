@@ -58,5 +58,6 @@ export async function getEventById(id: string) {
     } as EventData;
   } catch (error) {
     console.log("Could not get event by id in eventApi: ", error);
+    return null;
   }
 }

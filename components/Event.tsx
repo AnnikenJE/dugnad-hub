@@ -1,5 +1,7 @@
 // Events in index(home)
 
+import { Colors } from "@/styles/colors";
+import { Styles } from "@/styles/componentStyle";
 import { EventData } from "@/types/event";
 import { router } from "expo-router";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
@@ -15,14 +17,14 @@ export default function Event({ eventData }: EventProps) {
   return (
     <Pressable
       style={style.container}
-     onPress={() => {
+      onPress={() => {
         router.push({
-                    pathname: "/event-details/[id]",
-                    params:{id: eventData.id}
-        })
-     }}
+          pathname: "/event-details/[id]",
+          params: { id: eventData.id },
+        });
+      }}
     >
-      <View>
+      <View style={Styles.centerContainer}>
         <Image
           accessible={true}
           accessibilityLabel="Chosen image by event creator."
@@ -31,8 +33,25 @@ export default function Event({ eventData }: EventProps) {
           resizeMode="cover"
           style={style.image}
         />
-        <View>
-          <Text>{eventData.title}</Text>
+        <View style={[style.textContainer]}>
+          <Text
+            style={{
+              textDecorationLine: "underline",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: 15,
+            }}
+          >
+            {eventData.title}
+          </Text>
+          <View style={{alignItems: "center"}}>
+            <Text>Opprettet av: {eventData.authorName}</Text>
+            <Text>Kategori: {eventData.category}</Text>
+            <Text>
+              {eventData.participants.length} / {eventData.maxParticipants}{" "}
+              påmeldte
+            </Text>
+          </View>
         </View>
       </View>
     </Pressable>
@@ -42,11 +61,25 @@ export default function Event({ eventData }: EventProps) {
 // Styles ----------------------------------
 const style = StyleSheet.create({
   container: {
-    backgroundColor: "pink",
+    backgroundColor: Colors.mainColorLight,
+    margin: 16,
+    padding: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: Colors.mainColor,
   },
   image: {
     height: 250,
     width: "100%",
-    borderRadius: 8,
+    borderTopStartRadius: 8,
+    borderTopEndRadius: 8,
+  },
+  textContainer: {
+    backgroundColor: "white",
+    width: "100%",
+    height: 100,
+    padding: 16,
+    borderBottomEndRadius: 8,
+    borderBottomStartRadius: 8,
   },
 });
