@@ -125,7 +125,7 @@ export async function getSearchedEvents(search: string) {
       query(
         collection(db, "events"),
         where("title", ">=", search),
-        where("title", "<=", endTerm),
+        where("title", "<=", endTerm)
       )
     );
     return querySnapshot.docs.map((doc) => {
@@ -134,5 +134,24 @@ export async function getSearchedEvents(search: string) {
   } catch (error) {
     console.error("Could not search for events: ", error);
     return [] as EventData[];
+  }
+}
+
+// Show events that user is signed up for
+export async function getEventsByParticipation(userId: string) {
+  try {
+    const querySnapshot = await getDocs(
+      query(
+        collection(db, "events"),
+        where("participants", "array-contains", userId)
+      )
+    );
+
+    return querySnapshot.docs.map((doc) => {
+      return { ...doc.data(), id: doc.id } as EventData;
+    });
+  } catch (error) {
+    console.error("Could not get events by participation: ", error);
+    return [];
   }
 }

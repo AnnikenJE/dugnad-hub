@@ -22,22 +22,27 @@ import {
 export default function RegistrationsTab() {
   // Variables
   const [events, setEvents] = useState<EventData[]>([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isShowingMadeByUser, setIsShowingMadeByUser] = useState(true);
   const { user } = useAuthSession();
 
   // Functions
-  async function getEventsFromApi() {
+  async function getUserMadeEventsFromApi() {
     setIsRefreshing(true);
-
     const events = await eventApi.getEventsByUserId(user?.uid ?? "");
-
     setEvents(events ?? []);
     setIsRefreshing(false);
   }
 
-  function checkIfEventsExist() {
+  async function getUserParticipatedEventsFromApi() {
+    setIsRefreshing(true);
+    const events = await eventApi.getEventsByParticipation(user?.uid ?? "");
+    setEvents(events ?? []);
+    setIsRefreshing(false);
+    console.log(events);
+  }
+
+  function checkIfEventsExistList() {
     if (events.length === 0) {
       return (
         <View>
@@ -51,7 +56,11 @@ export default function RegistrationsTab() {
           refreshControl={
             <RefreshControl
               refreshing={isRefreshing}
-              onRefresh={getEventsFromApi}
+              onRefresh={
+                isShowingMadeByUser
+                  ? getUserMadeEventsFromApi
+                  : getUserParticipatedEventsFromApi
+              }
             />
           }
           renderItem={(event) => <Event eventData={event.item}></Event>}
@@ -60,9 +69,50 @@ export default function RegistrationsTab() {
     }
   }
 
+  function showUserMadeEvents() {
+    return (
+      <Pressable
+        onPress={() => {
+          getUserMadeEventsFromApi();
+          setIsShowingMadeByUser(true);
+          console.log("fefe");
+        }}
+      >
+        <Text
+          style={{
+            color: Colors.mainColor,
+            fontWeight: "bold",
+          }}
+        >
+          Se mine opprettede dugnader
+        </Text>
+      </Pressable>
+    );
+  }
+
+  function showUserEventParticipation() {
+    return (
+      <Pressable
+        onPress={() => {
+          setIsShowingMadeByUser(false);
+          getUserParticipatedEventsFromApi();
+        }}
+      >
+        <Text
+          style={{
+            color: Colors.gray,
+            fontWeight: "bold",
+          }}
+        >
+          Se påmeldte dugnader
+        </Text>
+      </Pressable>
+    );
+  }
+
   // UseEffect
   useEffect(() => {
-    getEventsFromApi();
+    getUserMadeEventsFromApi();
   }, []);
 
   //  Return ----------------------------------
@@ -83,17 +133,10 @@ export default function RegistrationsTab() {
         Dugnader opprettet av {user?.displayName}
       </Text>
       <View>
-        <Pressable onPress={() => {}}>
-          <Text
-            style={{
-              color: Colors.mainColor,
-              fontWeight: "bold",
-            }}
-          >
-            Se påmeldte dugnader
-          </Text>
-        </Pressable>
-        {checkIfEventsExist()}
+        {isShowingMadeByUser
+          ? showUserEventParticipation()
+          : showUserMadeEvents()}
+        {checkIfEventsExistList()}
       </View>
     </View>
   );
