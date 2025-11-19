@@ -2,7 +2,18 @@
 
 import { db, getDownloadUrl } from "@/firebaseConfig";
 import { EventData } from "@/types/event";
-import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import {
+  addDoc,
+  arrayUnion,
+  arrayRemove,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { uploadImage } from "./imageApi";
 
 // Put event into firestore
@@ -61,34 +72,46 @@ export async function getEventById(id: string) {
   }
 }
 
-
 // Get events made by spesific user
-export async function getEventsByUserId(userId: string){
-  try{
+export async function getEventsByUserId(userId: string) {
+  try {
     const querySnapshot = await getDocs(
-    query(collection(db, "events"), where("authorId", "==", userId))
+      query(collection(db, "events"), where("authorId", "==", userId))
     );
-    
+
     return querySnapshot.docs.map((doc) => {
-      return{ ...doc.data(), id: doc.id} as EventData;
-    })
-  } catch (error){
-    console.error("Could not get users events: ", error)
+      return { ...doc.data(), id: doc.id } as EventData;
+    });
+  } catch (error) {
+    console.error("Could not get users events: ", error);
   }
 }
 
 // Add user to event
-export async function updateUserToEvent(userId: string, eventId: string){
-  try{
-
+export async function addUserToEvent(userId: string, eventId: string) {
+  try {
     // Source: https://firebase.google.com/docs/firestore/manage-data/add-data
     const eventRef = doc(db, "events", eventId);
 
-
-  await updateDoc(eventRef, {
-    participants: arrayUnion(userId)
-  })
+    await updateDoc(eventRef, {
+      participants: arrayUnion(userId),
+    });
   } catch (error) {
-    console.error("Could not add participant", error)
+    console.error("Could not add participant", error);
+  }
+}
+
+
+// Remove user from event
+export async function removeUseFromEvent(userId: string, eventId: string) {
+  try {
+    // Source: https://firebase.google.com/docs/firestore/manage-data/add-data
+    const eventRef = doc(db, "events", eventId);
+
+    await updateDoc(eventRef, {
+      participants: arrayRemove(userId),
+    });
+  } catch (error) {
+    console.error("Could not remove participant", error);
   }
 }

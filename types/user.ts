@@ -2,6 +2,8 @@
 export interface UserData {
     name: string
     email: string
-    about: string 
+    about?: string 
+    adress?: string
+    phone?: string
   //  favourites: string[]
 }

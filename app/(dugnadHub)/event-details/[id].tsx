@@ -7,6 +7,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   Image,
   Pressable,
   StyleSheet,
@@ -86,7 +87,33 @@ export default function EventDetails() {
           </View>
 
           {isParticipating ? (
-            <Text>Påmeldt</Text>
+            <Pressable
+              style={[Style.Styles.button, { backgroundColor: Colors.gray }]}
+              onPress={() => {
+                if (user?.uid === event.authorId) {
+                  Alert.alert(
+                    "Kan ikke meldes av!",
+                    "Du kan ikke melde deg av en event du har laget.",
+                    [{ text: "OK" }]
+                  );
+                  return;
+                }
+                if (user?.uid) {
+                  eventApi.removeUseFromEvent(user.uid, event.id);
+                  getEventFromApi(id);
+                }
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                Meld av
+              </Text>
+            </Pressable>
           ) : (
             <Pressable
               style={[
@@ -95,7 +122,8 @@ export default function EventDetails() {
               ]}
               onPress={() => {
                 if (user?.uid) {
-                  eventApi.updateUserToEvent(user.uid, event.id);
+                  eventApi.addUserToEvent(user.uid, event.id);
+                  getEventFromApi(id);
                 }
               }}
             >

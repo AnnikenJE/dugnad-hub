@@ -1,16 +1,17 @@
 import * as eventApi from "@/api/eventApi";
 import Event from "@/components/Event";
 import { useAuthSession } from "@/providers/authctx";
+import { Colors } from "@/styles/colors";
 import { EventData } from "@/types/event";
 import { useEffect, useState } from "react";
-import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
+import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 
 // ----------------------------------
 export default function RegistrationsTab() {
   const [events, setEvents] = useState<EventData[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isShowingMadeByUser, setIsShowingMadeByUser] = useState(true)
+  const [isShowingMadeByUser, setIsShowingMadeByUser] = useState(true);
   const { user } = useAuthSession();
 
   async function getEventsFromApi() {
@@ -29,6 +30,20 @@ export default function RegistrationsTab() {
   //  Return ----------------------------------
   return (
     <View style={styles.mainContainer}>
+      <Text
+        style={{
+          textAlign: "center",
+          padding: 8,
+          margin: 8,
+          color: Colors.mainColor,
+          fontWeight: "bold",
+          fontSize: 20,
+          borderRadius: 8,
+          backgroundColor: Colors.mainColorLight,
+        }}
+      >
+        Eventer opprettet av {user?.displayName}
+      </Text>
       <FlatList
         data={events}
         refreshControl={
