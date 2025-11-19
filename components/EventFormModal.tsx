@@ -34,7 +34,7 @@ export type EventModalProps = {
 export default function EventFormModal({
   isVisible,
   setIsVisible,
-  confirmEventAdded, // TODO:
+  confirmEventAdded,
 }: EventModalProps) {
   const { user, userNameSession } = useAuthSession();
   const [eventTitle, setEventTitle] = useState("");
@@ -234,6 +234,7 @@ export default function EventFormModal({
                       setDate("");
                       setTime("");
                       setMaxParticipants("");
+                      confirmEventAdded()
                     }
                   }}
                 >

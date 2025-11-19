@@ -2,7 +2,7 @@
 
 import { db, getDownloadUrl } from "@/firebaseConfig";
 import { EventData } from "@/types/event";
-import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { uploadImage } from "./imageApi";
 
 // Put event into firestore
@@ -25,7 +25,7 @@ export async function createEvent(event: EventData) {
     const docRef = await addDoc(collection(db, "events"), newEvent);
     console.log("New document written with id: ", docRef.id);
   } catch (error) {
-    console.log("Could not create event in eventApi:", error);
+    console.error("Could not create event in eventApi:", error);
   }
 }
 
@@ -42,7 +42,7 @@ export async function getAllEvents() {
     );
     return events;
   } catch (error) {
-    console.log("Cant get all events in eventApi: ", error);
+    console.error("Cant get all events in eventApi: ", error);
     return [] as EventData[];
   }
 }
@@ -56,7 +56,23 @@ export async function getEventById(id: string) {
       id: thisEvent.id,
     } as EventData;
   } catch (error) {
-    console.log("Could not get event by id in eventApi: ", error);
+    console.error("Could not get event by id in eventApi: ", error);
     return null;
+  }
+}
+
+
+// Get events made by spesific user
+export async function getEventsByUserId(userId: string){
+  try{
+    const querySnapshot = await getDocs(
+    query(collection(db, "events"), where("authorId", "==", userId))
+    );
+    
+    return querySnapshot.docs.map((doc) => {
+      return{ ...doc.data(), id: doc.id} as EventData;
+    })
+  } catch (error){
+    console.error("Could not get users events: ", error)
   }
 }
