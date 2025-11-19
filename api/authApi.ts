@@ -1,5 +1,8 @@
+//
+//
 // Authentication connection to firebase
 
+// Imports ----------------------------------
 import { auth } from "@/firebaseConfig";
 import {
   GoogleSignin,
@@ -15,7 +18,8 @@ import {
 } from "firebase/auth";
 import { Alert } from "react-native";
 
-// ----------------------------------
+// Functions ----------------------------------
+// Email sign in
 export async function signIn(email: string, password: string) {
   try {
     await signInWithEmailAndPassword(auth, email, password).then(
@@ -33,10 +37,12 @@ export async function signIn(email: string, password: string) {
   }
 }
 
+// Sign out
 export async function signOut() {
   await auth.signOut();
 }
 
+// Create a new user with email
 export async function createUser(email: string, password: string) {
   try {
     const userCredentials = await createUserWithEmailAndPassword(
@@ -52,6 +58,7 @@ export async function createUser(email: string, password: string) {
   }
 }
 
+// Set user name
 export async function setUserDisplayName(user: User, name: string) {
   try {
     await updateProfile(user, {
@@ -62,6 +69,7 @@ export async function setUserDisplayName(user: User, name: string) {
   }
 }
 
+// Sign in with google
 export const signInWithGoogle = async () => {
   try {
     await GoogleSignin.hasPlayServices();
@@ -82,6 +90,6 @@ export const signInWithGoogle = async () => {
       }
     }
   } catch (error) {
-    console.log("Error signing in with google", error);
+    console.error("Error signing in with google", error);
   }
 };

@@ -2,6 +2,7 @@ import * as eventApi from "@/api/eventApi";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import * as Style from "@/styles/componentStyle";
+import * as userApi from "@/api/userApi"
 import { EventData } from "@/types/event";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -65,18 +66,35 @@ export default function EventDetails() {
     } else {
       if (event?.participants.length === event?.maxParticipants) {
         return (
-          <Text
-            style={{
-              color: "red",
-              fontWeight: "bold",
-              textAlign: "center",
+          <Pressable
+            style={[Style.Styles.button, { backgroundColor: Colors.gray }]}
+            onPress={() => {
+              if (user?.uid === event?.authorId || "") {
+                Alert.alert(
+                  "Kan ikke meldes av!",
+                  "Du kan ikke melde deg av en event du har laget.",
+                  [{ text: "OK" }]
+                );
+                return;
+              }
+              if (user?.uid && event?.id) {
+                eventApi.removeUseFromEvent(user.uid, event.id);
+                getEventFromApi(id);
+              }
             }}
           >
-            Dugnaden er FULL
-          </Text>
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Meld av
+            </Text>
+          </Pressable>
         );
       }
-
       return (
         <Pressable
           style={[Style.Styles.button, { backgroundColor: Colors.mainColor }]}
@@ -101,6 +119,31 @@ export default function EventDetails() {
     }
   }
 
+  // Add og remove events from favourites
+  function addOrRemoveFavouritesButton() {
+    return (
+      <Pressable
+        style={[Style.Styles.button, { backgroundColor: "yellow" }]}
+        onPress={() => {
+         
+          if (user?.uid && event?.id) {
+            userApi.addEventToFavourites(user.uid, event.id, user.displayName || "Something wrong happend") 
+            getEventFromApi(id);
+          }
+        }}
+      >
+        <Text
+          style={{
+            color: "black",
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+         Legg til i favoritter
+        </Text>
+      </Pressable>
+    );
+  }
   if (event === null) {
     return (
       <View style={Style.Styles.centerContainer}>
@@ -153,6 +196,7 @@ export default function EventDetails() {
               Plasser:{event.participants.length} / {event.maxParticipants}
             </Text>
           </View>
+          {addOrRemoveFavouritesButton()}
           {manageParticipantsButton()}
         </View>
       </View>

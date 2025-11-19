@@ -1,5 +1,8 @@
+//
+//
 // Events connection to firebase
 
+// Imports ----------------------------------
 import { db, getDownloadUrl } from "@/firebaseConfig";
 import { EventData } from "@/types/event";
 import {
@@ -16,8 +19,7 @@ import {
 } from "firebase/firestore";
 import { uploadImage } from "./imageApi";
 
-// Put event into firestore
-// ----------------------------------
+// Functions ----------------------------------
 export async function createEvent(event: EventData) {
   try {
     const image = await uploadImage(event.imageUri);

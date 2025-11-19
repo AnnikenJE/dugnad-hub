@@ -4,7 +4,14 @@ import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import { EventData } from "@/types/event";
 import { useEffect, useState } from "react";
-import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 // ----------------------------------
 export default function RegistrationsTab() {
@@ -27,6 +34,29 @@ export default function RegistrationsTab() {
     getEventsFromApi();
   }, []);
 
+  function checkIfEventsExist() {
+    if (events.length === 0) {
+      return (
+        <View>
+          <Text>Ingen eventer.</Text>
+        </View>
+      );
+    } else {
+      return (
+        <FlatList
+          data={events}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={getEventsFromApi}
+            />
+          }
+          renderItem={(event) => <Event eventData={event.item}></Event>}
+        ></FlatList>
+      );
+    }
+  }
+
   //  Return ----------------------------------
   return (
     <View style={styles.mainContainer}>
@@ -42,18 +72,21 @@ export default function RegistrationsTab() {
           backgroundColor: Colors.mainColorLight,
         }}
       >
-       Dugnader opprettet av {user?.displayName}
+        Dugnader opprettet av {user?.displayName}
       </Text>
-      <FlatList
-        data={events}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={getEventsFromApi}
-          />
-        }
-        renderItem={(event) => <Event eventData={event.item}></Event>}
-      ></FlatList>
+      <View>
+        <Pressable onPress={() => {}}>
+          <Text
+            style={{
+              color: Colors.mainColor,
+              fontWeight: "bold",
+            }}
+          >
+            Se påmeldte dugnader
+          </Text>
+        </Pressable>
+        {checkIfEventsExist()}
+      </View>
     </View>
   );
 }
@@ -64,5 +97,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     width: "100%",
+    paddingTop: 40
   },
 });

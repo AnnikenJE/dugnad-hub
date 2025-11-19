@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 // ----------------------------------
 export default function ProfileTab() {
-  const { signOut } = useAuthSession();
+  const { user, signOut } = useAuthSession();
 
   // Return ----------------------------------
   return (
@@ -32,8 +32,10 @@ export default function ProfileTab() {
           ),
         }}
       />
-      <Text>Profil</Text>
-      <Text>Mine påmeldte dugnader</Text>
+      <Text>{user?.displayName}
+      </Text>
+      <Text>{user?.email}</Text>
+      <Text>Mine favoritt dugnader</Text>
     </View>
   );
 }
