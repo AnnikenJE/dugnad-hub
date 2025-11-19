@@ -20,7 +20,6 @@ export default function EventDetails() {
   const { user } = useAuthSession();
 
   const [event, setEvent] = useState<EventData | null>(null);
-  const isParticipating = event?.participants.includes(user?.uid || "");
 
   async function getEventFromApi(id: string) {
     const event = await eventApi.getEventById(id);
@@ -31,7 +30,76 @@ export default function EventDetails() {
     getEventFromApi(id);
   }, [id]);
 
-  console.log(event?.imageUri);
+  function manageParticipantsButton() {
+    const isParticipating = event?.participants.includes(user?.uid || "");
+    if (isParticipating) {
+      return (
+        <Pressable
+          style={[Style.Styles.button, { backgroundColor: Colors.gray }]}
+          onPress={() => {
+            if (user?.uid === event?.authorId || "") {
+              Alert.alert(
+                "Kan ikke meldes av!",
+                "Du kan ikke melde deg av en event du har laget.",
+                [{ text: "OK" }]
+              );
+              return;
+            }
+            if (user?.uid && event?.id) {
+              eventApi.removeUseFromEvent(user.uid, event.id);
+              getEventFromApi(id);
+            }
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Meld av
+          </Text>
+        </Pressable>
+      );
+    } else {
+      if (event?.participants.length === event?.maxParticipants) {
+        return (
+          <Text
+            style={{
+              color: "red",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Dugnaden er FULL
+          </Text>
+        );
+      }
+
+      return (
+        <Pressable
+          style={[Style.Styles.button, { backgroundColor: Colors.mainColor }]}
+          onPress={() => {
+            if (user?.uid) {
+              eventApi.addUserToEvent(user.uid, event?.id || "");
+              getEventFromApi(id);
+            }
+          }}
+        >
+          <Text
+            style={{
+              color: "white",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Meld på
+          </Text>
+        </Pressable>
+      );
+    }
+  }
 
   if (event === null) {
     return (
@@ -85,59 +153,7 @@ export default function EventDetails() {
               Plasser:{event.participants.length} / {event.maxParticipants}
             </Text>
           </View>
-
-          {isParticipating ? (
-            <Pressable
-              style={[Style.Styles.button, { backgroundColor: Colors.gray }]}
-              onPress={() => {
-                if (user?.uid === event.authorId) {
-                  Alert.alert(
-                    "Kan ikke meldes av!",
-                    "Du kan ikke melde deg av en event du har laget.",
-                    [{ text: "OK" }]
-                  );
-                  return;
-                }
-                if (user?.uid) {
-                  eventApi.removeUseFromEvent(user.uid, event.id);
-                  getEventFromApi(id);
-                }
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Meld av
-              </Text>
-            </Pressable>
-          ) : (
-            <Pressable
-              style={[
-                Style.Styles.button,
-                { backgroundColor: Colors.mainColor },
-              ]}
-              onPress={() => {
-                if (user?.uid) {
-                  eventApi.addUserToEvent(user.uid, event.id);
-                  getEventFromApi(id);
-                }
-              }}
-            >
-              <Text
-                style={{
-                  color: "white",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                }}
-              >
-                Meld på
-              </Text>
-            </Pressable>
-          )}
+          {manageParticipantsButton()}
         </View>
       </View>
     </View>

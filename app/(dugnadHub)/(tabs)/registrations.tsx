@@ -42,7 +42,7 @@ export default function RegistrationsTab() {
           backgroundColor: Colors.mainColorLight,
         }}
       >
-        Eventer opprettet av {user?.displayName}
+       Dugnader opprettet av {user?.displayName}
       </Text>
       <FlatList
         data={events}

@@ -33,6 +33,7 @@ export default function HomeTab() {
     getEventsFromApi();
   }, []);
 
+
   // Return ----------------------------------
   return (
     <View style={styles.mainContainer}>
@@ -56,6 +57,20 @@ export default function HomeTab() {
           ),
         }}
       />
+        <Text
+        style={{
+          textAlign: "center",
+          padding: 8,
+          margin: 8,
+          color: Colors.mainColor,
+          fontWeight: "bold",
+          fontSize: 20,
+          borderRadius: 8,
+          backgroundColor: Colors.mainColorLight,
+        }}
+      >
+        Alle dugnader
+      </Text>
       <FlatList
         data={events}
         refreshControl={
