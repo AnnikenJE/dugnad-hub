@@ -2,7 +2,7 @@
 
 import { db, getDownloadUrl } from "@/firebaseConfig";
 import { EventData } from "@/types/event";
-import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, arrayUnion, collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { uploadImage } from "./imageApi";
 
 // Put event into firestore
@@ -74,5 +74,21 @@ export async function getEventsByUserId(userId: string){
     })
   } catch (error){
     console.error("Could not get users events: ", error)
+  }
+}
+
+// Add user to event
+export async function updateUserToEvent(userId: string, eventId: string){
+  try{
+
+    // Source: https://firebase.google.com/docs/firestore/manage-data/add-data
+    const eventRef = doc(db, "events", eventId);
+
+
+  await updateDoc(eventRef, {
+    participants: arrayUnion(userId)
+  })
+  } catch (error) {
+    console.error("Could not add participant", error)
   }
 }

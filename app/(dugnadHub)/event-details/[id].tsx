@@ -1,15 +1,25 @@
 import * as eventApi from "@/api/eventApi";
+import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import * as Style from "@/styles/componentStyle";
 import { EventData } from "@/types/event";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Image, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 export default function EventDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { user } = useAuthSession();
 
   const [event, setEvent] = useState<EventData | null>(null);
+  const isParticipating = event?.participants.includes(user?.uid || "");
 
   async function getEventFromApi(id: string) {
     const event = await eventApi.getEventById(id);
@@ -74,6 +84,32 @@ export default function EventDetails() {
               Plasser:{event.participants.length} / {event.maxParticipants}
             </Text>
           </View>
+
+          {isParticipating ? (
+            <Text>Påmeldt</Text>
+          ) : (
+            <Pressable
+              style={[
+                Style.Styles.button,
+                { backgroundColor: Colors.mainColor },
+              ]}
+              onPress={() => {
+                if (user?.uid) {
+                  eventApi.updateUserToEvent(user.uid, event.id);
+                }
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                Meld på
+              </Text>
+            </Pressable>
+          )}
         </View>
       </View>
     </View>
