@@ -1,5 +1,6 @@
 // If something goes wrong with pat
 
+// Imports ----------------------------------
 import { Colors } from "@/styles/colors";
 import { Link } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";

@@ -1,5 +1,8 @@
+//
+//
 // Index page - home
 
+// Imports ----------------------------------
 import * as eventApi from "@/api/eventApi";
 import Event from "@/components/Event";
 import EventFormModal from "@/components/EventFormModal";
@@ -18,10 +21,13 @@ import {
 
 // ----------------------------------
 export default function HomeTab() {
+
+  // Variables
   const [events, setEvents] = useState<EventData[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  // Functions
   async function getEventsFromApi() {
     setIsRefreshing(true);
     const events = await eventApi.getAllEvents();
@@ -29,6 +35,7 @@ export default function HomeTab() {
     setIsRefreshing(false);
   }
 
+  // UseEffect
   useEffect(() => {
     getEventsFromApi();
   }, []);

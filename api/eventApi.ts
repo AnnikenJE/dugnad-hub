@@ -20,6 +20,7 @@ import {
 import { uploadImage } from "./imageApi";
 
 // Functions ----------------------------------
+// Create event and put into firebase
 export async function createEvent(event: EventData) {
   try {
     const image = await uploadImage(event.imageUri);
@@ -27,7 +28,6 @@ export async function createEvent(event: EventData) {
       console.error("Error when uploading image in create event in imageAPI.");
       return;
     }
-
     const imageDownloadUrl = await getDownloadUrl(image);
 
     const newEvent: EventData = {
@@ -36,7 +36,7 @@ export async function createEvent(event: EventData) {
     };
 
     const docRef = await addDoc(collection(db, "events"), newEvent);
-    console.log("New document written with id: ", docRef.id);
+    console.log("New event put into firebase, written with id: ", docRef.id);
   } catch (error) {
     console.error("Could not create event in eventApi:", error);
   }
@@ -74,7 +74,7 @@ export async function getEventById(id: string) {
   }
 }
 
-// Get events made by spesific user
+// Get events made by spesific user by userid
 export async function getEventsByUserId(userId: string) {
   try {
     const querySnapshot = await getDocs(

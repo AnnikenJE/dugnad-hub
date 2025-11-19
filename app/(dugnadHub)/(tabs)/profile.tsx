@@ -1,3 +1,8 @@
+//
+//
+// Profile page
+
+// Imports ----------------------------------
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import { Stack } from "expo-router";
@@ -5,6 +10,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 // ----------------------------------
 export default function ProfileTab() {
+  
   const { user, signOut } = useAuthSession();
 
   // Return ----------------------------------
@@ -13,6 +19,7 @@ export default function ProfileTab() {
       <Stack.Screen
         options={{
           headerRight: () => (
+            // Sign out button
             <Pressable
               style={{ paddingRight: 16 }}
               onPress={() => {
@@ -32,8 +39,7 @@ export default function ProfileTab() {
           ),
         }}
       />
-      <Text>{user?.displayName}
-      </Text>
+      <Text>{user?.displayName}</Text>
       <Text>{user?.email}</Text>
       <Text>Mine favoritt dugnader</Text>
     </View>

@@ -1,5 +1,6 @@
 // Modal for making events (dugnad)
 
+// Imports ----------------------------------
 import * as eventApi from "@/api/eventApi";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";

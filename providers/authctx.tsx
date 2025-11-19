@@ -1,5 +1,6 @@
 // Autentisering
 
+// Imports ----------------------------------
 import { createUser, setUserDisplayName, signIn, signOut } from "@/api/authApi";
 import { auth } from "@/firebaseConfig";
 import { useRouter } from "expo-router";

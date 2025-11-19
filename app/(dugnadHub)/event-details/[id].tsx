@@ -1,8 +1,13 @@
+//
+//
+// Details for events
+
+// Imports ----------------------------------
 import * as eventApi from "@/api/eventApi";
+import * as userApi from "@/api/userApi";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import * as Style from "@/styles/componentStyle";
-import * as userApi from "@/api/userApi"
 import { EventData } from "@/types/event";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
@@ -16,23 +21,23 @@ import {
   View,
 } from "react-native";
 
+// ----------------------------------
 export default function EventDetails() {
+  // Variables
   const { id } = useLocalSearchParams<{ id: string }>();
   const { user } = useAuthSession();
 
   const [event, setEvent] = useState<EventData | null>(null);
 
+  // Functions
   async function getEventFromApi(id: string) {
     const event = await eventApi.getEventById(id);
     setEvent(event);
   }
 
-  useEffect(() => {
-    getEventFromApi(id);
-  }, [id]);
-
   function manageParticipantsButton() {
     const isParticipating = event?.participants.includes(user?.uid || "");
+
     if (isParticipating) {
       return (
         <Pressable
@@ -66,33 +71,15 @@ export default function EventDetails() {
     } else {
       if (event?.participants.length === event?.maxParticipants) {
         return (
-          <Pressable
-            style={[Style.Styles.button, { backgroundColor: Colors.gray }]}
-            onPress={() => {
-              if (user?.uid === event?.authorId || "") {
-                Alert.alert(
-                  "Kan ikke meldes av!",
-                  "Du kan ikke melde deg av en event du har laget.",
-                  [{ text: "OK" }]
-                );
-                return;
-              }
-              if (user?.uid && event?.id) {
-                eventApi.removeUseFromEvent(user.uid, event.id);
-                getEventFromApi(id);
-              }
+          <Text
+            style={{
+              color: "red",
+              fontWeight: "bold",
+              textAlign: "center",
             }}
           >
-            <Text
-              style={{
-                color: "white",
-                fontWeight: "bold",
-                textAlign: "center",
-              }}
-            >
-              Meld av
-            </Text>
-          </Pressable>
+            Dugnaden er FULL
+          </Text>
         );
       }
       return (
@@ -125,9 +112,12 @@ export default function EventDetails() {
       <Pressable
         style={[Style.Styles.button, { backgroundColor: "yellow" }]}
         onPress={() => {
-         
           if (user?.uid && event?.id) {
-            userApi.addEventToFavourites(user.uid, event.id, user.displayName || "Something wrong happend") 
+            userApi.addEventToFavourites(
+              user.uid,
+              event.id,
+              user.displayName || "Something wrong happend"
+            );
             getEventFromApi(id);
           }
         }}
@@ -139,11 +129,18 @@ export default function EventDetails() {
             textAlign: "center",
           }}
         >
-         Legg til i favoritter
+          Legg til i favoritter
         </Text>
       </Pressable>
     );
   }
+
+  // UseEffect
+  useEffect(() => {
+    getEventFromApi(id);
+  }, [id]);
+
+  // Check if event exist
   if (event === null) {
     return (
       <View style={Style.Styles.centerContainer}>
@@ -153,6 +150,7 @@ export default function EventDetails() {
     );
   }
 
+  // Return ----------------------------------
   return (
     <View style={{ flex: 1 }}>
       <Stack.Screen
@@ -182,12 +180,12 @@ export default function EventDetails() {
                 Dato: {event.date} Kl.{event.time}
               </Text>
             </View>
+
             <View style={{ marginBottom: 10 }}>
               <Text>{event.description}</Text>
             </View>
 
             <Text>Kategori: {event.category}</Text>
-
             <Text>Adresse: {event.adress}</Text>
             <Text>Opprettet av:{event.authorName}</Text>
             <Text>Oppgaver:{event.tasks}</Text>

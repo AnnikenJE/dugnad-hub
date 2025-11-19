@@ -32,14 +32,18 @@ export async function signIn(email: string, password: string) {
     Alert.alert(
       "Ugyldig innlogging",
       "Brukernavn eller passord stemmer ikke.",
-      [{ text: "ok" }]
+      [{ text: "OK" }]
     );
   }
 }
 
 // Sign out
 export async function signOut() {
-  await auth.signOut();
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.error("Could not log out.", error);
+  }
 }
 
 // Create a new user with email

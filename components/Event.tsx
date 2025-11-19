@@ -1,5 +1,6 @@
 // Events in index(home)
 
+// Imports ----------------------------------
 import { Colors } from "@/styles/colors";
 import { Styles } from "@/styles/componentStyle";
 import { EventData } from "@/types/event";

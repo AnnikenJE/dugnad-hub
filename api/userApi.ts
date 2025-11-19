@@ -1,3 +1,4 @@
+// Imports ----------------------------------
 import { db } from "@/firebaseConfig";
 import {
   arrayRemove,
@@ -7,10 +8,15 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
+// Functions ----------------------------------
 // Add user to event
-export async function addEventToFavourites(userId: string, eventId: string, userName: string) {
+export async function addEventToFavourites(
+  userId: string,
+  eventId: string,
+  userName: string
+) {
   try {
-    // Source: https://firebase.google.com/docs/firestore/manage-data/add-data
+    // Source:
 
     const userRef = doc(db, "users", userId);
     await setDoc(

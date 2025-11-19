@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-//  Reusable styles----------------------------------
+//  Reusable styles ----------------------------------
 export const Styles = StyleSheet.create({
   textField: {
     padding: 8,

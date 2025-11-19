@@ -2,6 +2,7 @@
 //
 // Tab bar layout
 
+// Imports ----------------------------------
 import { Colors } from "@/styles/colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
@@ -17,8 +18,8 @@ export default function TabBar() {
         headerTitleStyle: {
           fontWeight: "bold",
           color: Colors.mainColor,
-          fontSize: 25
-        }
+          fontSize: 25,
+        },
       }}
     >
       <Tabs.Screen

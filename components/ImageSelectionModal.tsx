@@ -1,3 +1,4 @@
+// Imports ----------------------------------
 import { Colors } from "@/styles/colors";
 import * as Styles from "@/styles/componentStyle";
 import { CameraView, useCameraPermissions } from "expo-camera";

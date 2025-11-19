@@ -1,3 +1,8 @@
+//
+//
+// Registrations page - Shows events connected to user
+
+// Imports ----------------------------------
 import * as eventApi from "@/api/eventApi";
 import Event from "@/components/Event";
 import { useAuthSession } from "@/providers/authctx";
@@ -15,12 +20,14 @@ import {
 
 // ----------------------------------
 export default function RegistrationsTab() {
+  // Variables
   const [events, setEvents] = useState<EventData[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isShowingMadeByUser, setIsShowingMadeByUser] = useState(true);
   const { user } = useAuthSession();
 
+  // Functions
   async function getEventsFromApi() {
     setIsRefreshing(true);
 
@@ -29,10 +36,6 @@ export default function RegistrationsTab() {
     setEvents(events ?? []);
     setIsRefreshing(false);
   }
-
-  useEffect(() => {
-    getEventsFromApi();
-  }, []);
 
   function checkIfEventsExist() {
     if (events.length === 0) {
@@ -56,6 +59,11 @@ export default function RegistrationsTab() {
       );
     }
   }
+
+  // UseEffect
+  useEffect(() => {
+    getEventsFromApi();
+  }, []);
 
   //  Return ----------------------------------
   return (
@@ -97,6 +105,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     width: "100%",
-    paddingTop: 40
+    paddingTop: 40,
   },
 });
