@@ -7,8 +7,8 @@ import { db, getDownloadUrl } from "@/firebaseConfig";
 import { EventData } from "@/types/event";
 import {
   addDoc,
-  arrayUnion,
   arrayRemove,
+  arrayUnion,
   collection,
   doc,
   getDoc,
@@ -103,7 +103,6 @@ export async function addUserToEvent(userId: string, eventId: string) {
   }
 }
 
-
 // Remove user from event
 export async function removeUseFromEvent(userId: string, eventId: string) {
   try {
@@ -115,5 +114,25 @@ export async function removeUseFromEvent(userId: string, eventId: string) {
     });
   } catch (error) {
     console.error("Could not remove participant", error);
+  }
+}
+
+// Search events by title and category
+export async function getSearchedEvents(search: string) {
+  try {
+    const endTerm = search + "\uf8ff";
+    const querySnapshot = await getDocs(
+      query(
+        collection(db, "events"),
+        where("title", ">=", search),
+        where("title", "<=", endTerm),
+      )
+    );
+    return querySnapshot.docs.map((doc) => {
+      return { ...doc.data(), id: doc.id } as EventData;
+    });
+  } catch (error) {
+    console.error("Could not search for events: ", error);
+    return [] as EventData[];
   }
 }
