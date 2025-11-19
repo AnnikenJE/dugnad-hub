@@ -9,8 +9,10 @@ import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import * as Style from "@/styles/componentStyle";
 import { EventData } from "@/types/event";
+import { UserData } from "@/types/user";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
+
 import {
   ActivityIndicator,
   Alert,
@@ -28,6 +30,7 @@ export default function EventDetails() {
   const { user } = useAuthSession();
 
   const [event, setEvent] = useState<EventData | null>(null);
+  const [favourite, setFavourite] = useState<UserData | null>(null);
 
   // Functions
   async function getEventFromApi(id: string) {
@@ -35,8 +38,13 @@ export default function EventDetails() {
     setEvent(event);
   }
 
+  async function getFavouriteFromApi(id: string) {
+    const favourite = await userApi.getFavouritesByUserId(id);
+    setFavourite(favourite);
+  }
+
   function manageParticipantsButton() {
-    const isParticipating = event?.participants.includes(user?.uid || "");
+    const isParticipating = event?.participants.includes(user?.uid ?? "") ?? [];
 
     if (isParticipating) {
       return (
@@ -108,36 +116,62 @@ export default function EventDetails() {
 
   // Add og remove events from favourites
   function addOrRemoveFavouritesButton() {
-    return (
-      <Pressable
-        style={[Style.Styles.button, { backgroundColor: "yellow" }]}
-        onPress={() => {
-          if (user?.uid && event?.id) {
-            userApi.addEventToFavourites(
-              user.uid,
-              event.id,
-              user.displayName || "Something wrong happend"
-            );
-            getEventFromApi(id);
-          }
-        }}
-      >
-        <Text
-          style={{
-            color: "black",
-            fontWeight: "bold",
-            textAlign: "center",
+    const isFavourite = favourite?.favourites.includes(id) ?? [];
+    if (isFavourite) {
+      return (
+        <Pressable
+          style={[Style.Styles.button, { backgroundColor: Colors.gray }]}
+          onPress={() => {
+            if (user?.uid && event?.id) {
+              userApi.removeEventFromFavourites(user.uid, event.id);
+              getFavouriteFromApi(user.uid);
+            }
           }}
         >
-          Legg til i favoritter
-        </Text>
-      </Pressable>
-    );
+          <Text
+            style={{
+              color: "black",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Fjern fra favoritter
+          </Text>
+        </Pressable>
+      );
+    } else {
+      return (
+        <Pressable
+          style={[Style.Styles.button, { backgroundColor: "yellow" }]}
+          onPress={() => {
+            if (user?.uid && event?.id) {
+              userApi.addEventToFavourites(
+                user.uid,
+                event.id,
+                user.displayName || "Something wrong happend"
+              );
+              getFavouriteFromApi(user.uid);
+            }
+          }}
+        >
+          <Text
+            style={{
+              color: "black",
+              fontWeight: "bold",
+              textAlign: "center",
+            }}
+          >
+            Legg til i favoritter
+          </Text>
+        </Pressable>
+      );
+    }
   }
 
   // UseEffect
   useEffect(() => {
     getEventFromApi(id);
+    getFavouriteFromApi(user?.uid ?? "");
   }, [id]);
 
   // Check if event exist

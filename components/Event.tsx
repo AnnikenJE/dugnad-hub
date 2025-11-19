@@ -2,7 +2,6 @@
 
 // Imports ----------------------------------
 import { Colors } from "@/styles/colors";
-import { Styles } from "@/styles/componentStyle";
 import { EventData } from "@/types/event";
 import { router } from "expo-router";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
@@ -25,7 +24,7 @@ export default function Event({ eventData }: EventProps) {
         });
       }}
     >
-      <View style={Styles.centerContainer}>
+      <View>
         <Image
           accessible={true}
           accessibilityLabel="Chosen image by event creator."
@@ -41,12 +40,12 @@ export default function Event({ eventData }: EventProps) {
               fontWeight: "bold",
               textAlign: "center",
               fontSize: 15,
-              color: Colors.mainColor
+              color: Colors.mainColor,
             }}
           >
             {eventData.title}
           </Text>
-          <View style={{alignItems: "center"}}>
+          <View style={{ alignItems: "center" }}>
             <Text>Opprettet av: {eventData.authorName}</Text>
             <Text>Kategori: {eventData.category}</Text>
             <Text>
@@ -63,9 +62,7 @@ export default function Event({ eventData }: EventProps) {
 // Styles ----------------------------------
 const style = StyleSheet.create({
   container: {
-    backgroundColor: Colors.mainColorLight,
     margin: 16,
-    padding: 8,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: Colors.mainColor,

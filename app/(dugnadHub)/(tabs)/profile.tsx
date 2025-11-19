@@ -3,15 +3,42 @@
 // Profile page
 
 // Imports ----------------------------------
+import * as userApi from "@/api/userApi";
+import Event from "@/components/Event";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
+import { EventData } from "@/types/event";
 import { Stack } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  FlatList,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 
 // ----------------------------------
 export default function ProfileTab() {
-  
+  // Variables
   const { user, signOut } = useAuthSession();
+  const [events, setEvents] = useState<EventData[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  async function getFavouriteEventsFromApi() {
+    setIsRefreshing(true);
+
+    const events = await userApi.getAllUserFavourites(user?.uid ?? "")
+
+    setEvents(events ?? []);
+    setIsRefreshing(false);
+  }
+
+  // UseEffect
+  useEffect(() => {
+    getFavouriteEventsFromApi();
+  }, []);
 
   // Return ----------------------------------
   return (
@@ -42,6 +69,16 @@ export default function ProfileTab() {
       <Text>{user?.displayName}</Text>
       <Text>{user?.email}</Text>
       <Text>Mine favoritt dugnader</Text>
+      <FlatList
+        data={events}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={getFavouriteEventsFromApi}
+          />
+        }
+        renderItem={(event) => <Event eventData={event.item}></Event>}
+      ></FlatList>
     </View>
   );
 }
@@ -51,6 +88,5 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
   },
 });

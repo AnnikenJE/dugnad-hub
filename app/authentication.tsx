@@ -22,6 +22,7 @@ const Authentication = () => {
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignedUp, setIsSignedUp] = useState(true);
+  
 
   const { signIn, createUser } = useAuthSession();
 
