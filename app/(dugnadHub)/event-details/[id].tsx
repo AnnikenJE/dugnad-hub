@@ -221,8 +221,7 @@ export default function EventDetails() {
 
             <Text>Kategori: {event.category}</Text>
             <Text>Adresse: {event.adress}</Text>
-            <Text>Opprettet av:{event.authorName}</Text>
-            <Text>Oppgaver:{event.tasks}</Text>
+            <Text>Oppgaver: {event.tasks}</Text>
 
             <Text>
               Plasser:{event.participants.length} / {event.maxParticipants}

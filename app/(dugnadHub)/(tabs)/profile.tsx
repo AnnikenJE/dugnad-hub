@@ -48,7 +48,7 @@ export default function ProfileTab() {
       is focused and will do call if it */
     if (isTabFocused) {
       getFavouriteEventsFromApi();
-      console.log("call")
+      console.log("call");
     }
   }, [isTabFocused]);
 
@@ -77,7 +77,7 @@ export default function ProfileTab() {
 
   // Return ----------------------------------
   return (
-    <View >
+    <View>
       <Stack.Screen
         options={{
           headerRight: () => (
@@ -101,20 +101,26 @@ export default function ProfileTab() {
           ),
         }}
       />
-      <Text style={{ textAlign: "center" }}>{user?.displayName}</Text>
-      <Text style={{ textAlign: "center" }}>{user?.email}</Text>
-      <Text style={{ textAlign: "center" }}>Mine favoritt dugnader</Text>
+      <View style={{margin: 10, borderWidth: 1, borderColor: Colors.mainColor, padding: 16, borderRadius: 16}}>
+        
+        <Text style={{ textAlign: "center", fontSize:30 }}>
+          Brukernavn: {user?.displayName}
+        </Text>
+        <Text style={{ textAlign: "center" ,fontSize: 18 }}>Epost: {user?.email}</Text>
+      </View>
+
+      <Text
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+          marginTop: 20,
+          color: Colors.mainColor,
+        }}
+      >
+        Mine favoritt dugnader
+      </Text>
 
       {checkIfFavoritesExistList()}
     </View>
   );
 }
-
-// Style ----------------------------------
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center"
-  },
-});
