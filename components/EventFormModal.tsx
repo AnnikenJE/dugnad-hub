@@ -1,3 +1,5 @@
+//
+//
 // Modal for making events (dugnad)
 
 // Imports ----------------------------------
@@ -37,6 +39,7 @@ export default function EventFormModal({
   setIsVisible,
   confirmEventAdded,
 }: EventModalProps) {
+  // Variables
   const { user, userNameSession } = useAuthSession();
   const [eventTitle, setEventTitle] = useState("");
   const [image, setImage] = useState<string | null>(null);
@@ -177,6 +180,7 @@ export default function EventFormModal({
                 >
                   <Text style={{ color: "white" }}>Avbryt</Text>
                 </Pressable>
+
                 <Pressable
                   style={[
                     Styles.Styles.button,
@@ -201,7 +205,6 @@ export default function EventFormModal({
                       );
                       return;
                     }
-
                     if (image) {
                       setIsLoading(true);
                       const newEvent: EventData = {
@@ -235,7 +238,7 @@ export default function EventFormModal({
                       setDate("");
                       setTime("");
                       setMaxParticipants("");
-                      confirmEventAdded()
+                      confirmEventAdded();
                     }
                   }}
                 >

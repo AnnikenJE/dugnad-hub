@@ -1,3 +1,5 @@
+//
+//
 // Events in index(home)
 
 // Imports ----------------------------------
@@ -18,7 +20,6 @@ export default function Event({ eventData }: EventProps) {
     <Pressable
       style={style.container}
       onPress={() => {
-        
         router.push({
           pathname: "/event-details/[id]",
           params: { id: eventData.id },

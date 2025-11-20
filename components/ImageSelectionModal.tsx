@@ -1,3 +1,7 @@
+//
+//
+// Modal for camera and choosing image
+
 // Imports ----------------------------------
 import { Colors } from "@/styles/colors";
 import * as Styles from "@/styles/componentStyle";
@@ -17,10 +21,12 @@ export default function ImageSelectionModal({
   closeModal,
   setImage,
 }: ImageSelectionModalProps) {
-  // States
+
+  // Variables
   const [permission, requestPermission] = useCameraPermissions();
   const cameraRef = useRef<CameraView>(null);
 
+  //If checks
   if (!permission) {
     return;
   }
@@ -34,6 +40,7 @@ export default function ImageSelectionModal({
     );
   }
 
+  // Functions
   async function pickImage() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
@@ -99,7 +106,6 @@ export default function ImageSelectionModal({
 }
 
 // Styles ----------------------------------
-
 const style = StyleSheet.create({
   camera: {
     width: "100%",
