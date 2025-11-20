@@ -8,8 +8,9 @@ import Event from "@/components/Event";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import { EventData } from "@/types/event";
+import { useIsFocused } from "@react-navigation/native";
 import { Stack } from "expo-router";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -18,18 +19,18 @@ import {
   Text,
   View,
 } from "react-native";
-
 // ----------------------------------
 export default function ProfileTab() {
   // Variables
   const { user, signOut } = useAuthSession();
   const [events, setEvents] = useState<EventData[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const isTabFocused = useIsFocused();
 
   async function getFavouriteEventsFromApi() {
     setIsRefreshing(true);
 
-    const events = await userApi.getAllUserFavourites(user?.uid ?? "")
+    const events = await userApi.getAllUserFavourites(user?.uid ?? "");
 
     setEvents(events ?? []);
     setIsRefreshing(false);
@@ -40,28 +41,39 @@ export default function ProfileTab() {
     getFavouriteEventsFromApi();
   }, []);
 
-function checkIfFavoritesExistList(){
-      if (events.length === 0) {
+  useEffect(() => {
+    // Sourcce: https://reactnavigation.org/docs/use-is-focused/
+    /* Got some problems when I tried to use props as confirmEventAdded or similar,
+     but I ran into many problems so I found another solution. It checks if the tab
+      is focused and will do call if it */
+    if (isTabFocused) {
+      getFavouriteEventsFromApi();
+      console.log("call")
+    }
+  }, [isTabFocused]);
+
+  function checkIfFavoritesExistList() {
+    if (events.length === 0) {
       return (
         <View>
           <Text>Ingen eventer.</Text>
         </View>
       );
     } else {
-      return(
-              <FlatList
-        data={events}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={getFavouriteEventsFromApi}
-          />
-        }
-        renderItem={(event) => <Event eventData={event.item}></Event>}
-      ></FlatList>
-      )
+      return (
+        <FlatList
+          data={events}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={getFavouriteEventsFromApi}
+            />
+          }
+          renderItem={(event) => <Event eventData={event.item}></Event>}
+        ></FlatList>
+      );
     }
-}
+  }
 
   // Return ----------------------------------
   return (
@@ -92,7 +104,9 @@ function checkIfFavoritesExistList(){
       <Text>{user?.displayName}</Text>
       <Text>{user?.email}</Text>
       <Text>Mine favoritt dugnader</Text>
-{checkIfFavoritesExistList()}
+      <Text>Dra listen ned for å laste inn på nytt.</Text>
+
+      {checkIfFavoritesExistList()}
     </View>
   );
 }

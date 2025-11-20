@@ -116,7 +116,7 @@ export default function EventDetails() {
 
   // Add og remove events from favourites
   function addOrRemoveFavouritesButton() {
-    const isFavourite = favourite?.favourites.includes(id) ?? [];
+    const isFavourite = (favourite?.favourites ?? []).includes(id) ?? [];
     if (isFavourite) {
       return (
         <Pressable

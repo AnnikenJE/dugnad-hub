@@ -45,29 +45,8 @@ export default function HomeTab() {
     setIsRefreshing(false);
   }
 
-function checkIfFavoritesExistList(){
-      if (events.length === 0) {
-      return (
-        <View>
-          <Text>Ingen eventer.</Text>
-        </View>
-      );
-    } else {
-      return(
-             <FlatList
-        data={events}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={getEventsFromApi}
-          />
-        }
-        renderItem={(event) => <Event eventData={event.item}></Event>}
-      ></FlatList>
-      )
-    }
-}
 
+  
   //UseEffect
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -132,8 +111,17 @@ function checkIfFavoritesExistList(){
           onChangeText={setSearchText}
         ></TextInput>
       </View>
-   
-        {checkIfFavoritesExistList()}
+      <FlatList
+        data={events}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={getEventsFromApi}
+          />
+        }
+        renderItem={(event) => <Event eventData={event.item}></Event>}
+      ></FlatList>
+
       {/* Modal */}
       <EventFormModal
         isVisible={isModalVisible}

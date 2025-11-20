@@ -8,6 +8,7 @@ import Event from "@/components/Event";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
 import { EventData } from "@/types/event";
+import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import {
   FlatList,
@@ -25,6 +26,7 @@ export default function RegistrationsTab() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isShowingMadeByUser, setIsShowingMadeByUser] = useState(true);
   const { user } = useAuthSession();
+  const isTabFocused = useIsFocused();
 
   // Functions
   async function getUserMadeEventsFromApi() {
@@ -37,9 +39,9 @@ export default function RegistrationsTab() {
   async function getUserParticipatedEventsFromApi() {
     setIsRefreshing(true);
     const events = await eventApi.getEventsByParticipation(user?.uid ?? "");
+    console.log("fefe");
     setEvents(events ?? []);
     setIsRefreshing(false);
-    console.log(events);
   }
 
   function checkIfEventsExistList() {
@@ -111,8 +113,15 @@ export default function RegistrationsTab() {
   }
 
   // UseEffect
+
   useEffect(() => {
-    getUserMadeEventsFromApi();
+    if (isTabFocused) {
+      // Sourcce: https://reactnavigation.org/docs/use-is-focused/
+      /* Got some problems when I tried to use props as confirmEventAdded or similar,
+     but I ran into many problems so I found another solution. It checks if the tab
+      is focused and will do call if it */
+      getUserMadeEventsFromApi();
+    }
   }, []);
 
   //  Return ----------------------------------
