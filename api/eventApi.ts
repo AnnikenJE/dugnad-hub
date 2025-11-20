@@ -24,10 +24,12 @@ import { uploadImage } from "./imageApi";
 export async function createEvent(event: EventData) {
   try {
     const image = await uploadImage(event.imageUri);
+
     if (!image) {
       console.error("Error when uploading image in create event in imageAPI.");
       return;
     }
+
     const imageDownloadUrl = await getDownloadUrl(image);
 
     const newEvent: EventData = {
@@ -36,7 +38,7 @@ export async function createEvent(event: EventData) {
     };
 
     const docRef = await addDoc(collection(db, "events"), newEvent);
-    console.log("New event put into firebase, written with id: ", docRef.id);
+    console.log("New event is put into firebase, written with id: ", docRef.id);
   } catch (error) {
     console.error("Could not create event in eventApi:", error);
   }
@@ -46,6 +48,7 @@ export async function createEvent(event: EventData) {
 export async function getAllEvents() {
   try {
     const result = await getDocs(collection(db, "events"));
+
     const events = result.docs.map(
       (doc) =>
         ({
@@ -53,6 +56,7 @@ export async function getAllEvents() {
           id: doc.id,
         } as EventData)
     );
+
     return events;
   } catch (error) {
     console.error("Cant get all events in eventApi: ", error);
@@ -60,10 +64,11 @@ export async function getAllEvents() {
   }
 }
 
-// Get events from firestore by id
+// Get event from firestore by id
 export async function getEventById(id: string) {
   try {
     const thisEvent = await getDoc(doc(db, "events", id));
+
     return {
       ...thisEvent.data(),
       id: thisEvent.id,
@@ -92,7 +97,6 @@ export async function getEventsByUserId(userId: string) {
 // Add user to event
 export async function addUserToEvent(userId: string, eventId: string) {
   try {
-    // Source: https://firebase.google.com/docs/firestore/manage-data/add-data
     const eventRef = doc(db, "events", eventId);
 
     await updateDoc(eventRef, {
@@ -106,7 +110,6 @@ export async function addUserToEvent(userId: string, eventId: string) {
 // Remove user from event
 export async function removeUseFromEvent(userId: string, eventId: string) {
   try {
-    // Source: https://firebase.google.com/docs/firestore/manage-data/add-data
     const eventRef = doc(db, "events", eventId);
 
     await updateDoc(eventRef, {
@@ -117,7 +120,7 @@ export async function removeUseFromEvent(userId: string, eventId: string) {
   }
 }
 
-// Search events by title and category
+// Search events by title
 export async function getSearchedEvents(search: string) {
   try {
     const endTerm = search + "\uf8ff";

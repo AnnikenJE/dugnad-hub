@@ -2,7 +2,6 @@
 //
 // Images connection to firebase
 
-
 // Imports ----------------------------------
 import { getStorageRef } from "@/firebaseConfig";
 import { uploadBytesResumable } from "firebase/storage";

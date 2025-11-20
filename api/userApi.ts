@@ -6,10 +6,8 @@ import { UserData } from "@/types/user";
 import {
   arrayRemove,
   arrayUnion,
-  collection,
   doc,
   getDoc,
-  getDocs,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -37,7 +35,7 @@ export async function addEventToFavourites(
   }
 }
 
-// Remove user from event
+// Remove favourite event
 export async function removeEventFromFavourites(
   userId: string,
   eventId: string
@@ -67,15 +65,14 @@ export async function getFavouritesByUserId(userId: string) {
   }
 }
 
-// Get all favourites
+// Get all favourites by user id
 export async function getAllUserFavourites(userId: string) {
   try {
     const allEvents: EventData[] = await eventApi.getAllEvents();
-    const allFavourites = await getFavouritesByUserId(userId)
-
+    const allFavourites = await getFavouritesByUserId(userId);
 
     const userFavourites = allEvents.filter((event) => {
-        return (allFavourites?.favourites ?? []).includes(event.id)
+      return (allFavourites?.favourites ?? []).includes(event.id);
     });
     return userFavourites;
   } catch (error) {

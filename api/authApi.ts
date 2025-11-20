@@ -19,6 +19,7 @@ import {
 import { Alert } from "react-native";
 
 // Functions ----------------------------------
+
 // Email sign in
 export async function signIn(email: string, password: string) {
   try {
