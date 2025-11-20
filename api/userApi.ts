@@ -75,10 +75,11 @@ export async function getAllUserFavourites(userId: string) {
 
 
     const userFavourites = allEvents.filter((event) => {
-        return allFavourites?.favourites.includes(event.id)
+        return (allFavourites?.favourites ?? []).includes(event.id)
     });
     return userFavourites;
   } catch (error) {
     console.error("Could not get favourites from firebase: ", error);
+    return [];
   }
 }
