@@ -40,6 +40,29 @@ export default function ProfileTab() {
     getFavouriteEventsFromApi();
   }, []);
 
+function checkIfFavoritesExistList(){
+      if (events.length === 0) {
+      return (
+        <View>
+          <Text>Ingen eventer.</Text>
+        </View>
+      );
+    } else {
+      return(
+              <FlatList
+        data={events}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={getFavouriteEventsFromApi}
+          />
+        }
+        renderItem={(event) => <Event eventData={event.item}></Event>}
+      ></FlatList>
+      )
+    }
+}
+
   // Return ----------------------------------
   return (
     <View style={styles.mainContainer}>
@@ -69,16 +92,7 @@ export default function ProfileTab() {
       <Text>{user?.displayName}</Text>
       <Text>{user?.email}</Text>
       <Text>Mine favoritt dugnader</Text>
-      <FlatList
-        data={events}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefreshing}
-            onRefresh={getFavouriteEventsFromApi}
-          />
-        }
-        renderItem={(event) => <Event eventData={event.item}></Event>}
-      ></FlatList>
+{checkIfFavoritesExistList()}
     </View>
   );
 }
