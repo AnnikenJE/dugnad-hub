@@ -40,7 +40,6 @@ export default function RegistrationsTab() {
   async function getUserParticipatedEventsFromApi() {
     setIsRefreshing(true);
     const events = await eventApi.getEventsByParticipation(user?.uid ?? "");
-    console.log("fefe");
     setEvents(events ?? []);
     setIsRefreshing(false);
   }
@@ -116,8 +115,7 @@ export default function RegistrationsTab() {
     );
   }
 
-  // UseEffect
-
+  // UseEffects
   useEffect(() => {
     if (isTabFocused) {
       // Sourcce: https://reactnavigation.org/docs/use-is-focused/

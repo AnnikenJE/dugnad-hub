@@ -11,14 +11,8 @@ import { EventData } from "@/types/event";
 import { useIsFocused } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import {
-  FlatList,
-  Pressable,
-  RefreshControl,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, Pressable, RefreshControl, Text, View } from "react-native";
+
 // ----------------------------------
 export default function ProfileTab() {
   // Variables
@@ -27,30 +21,13 @@ export default function ProfileTab() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const isTabFocused = useIsFocused();
 
+  // Fuctions
   async function getFavouriteEventsFromApi() {
     setIsRefreshing(true);
-
     const events = await userApi.getAllUserFavourites(user?.uid ?? "");
-
     setEvents(events ?? []);
     setIsRefreshing(false);
   }
-
-  // UseEffect
-  useEffect(() => {
-    getFavouriteEventsFromApi();
-  }, []);
-
-  useEffect(() => {
-    // Sourcce: https://reactnavigation.org/docs/use-is-focused/
-    /* Got some problems when I tried to use props as confirmEventAdded or similar,
-     but I ran into many problems so I found another solution. It checks if the tab
-      is focused and will do call if it */
-    if (isTabFocused) {
-      getFavouriteEventsFromApi();
-      console.log("call");
-    }
-  }, [isTabFocused]);
 
   function checkIfFavoritesExistList() {
     if (events.length === 0) {
@@ -74,6 +51,21 @@ export default function ProfileTab() {
       );
     }
   }
+
+  // UseEffects
+  useEffect(() => {
+    getFavouriteEventsFromApi();
+  }, []);
+
+  useEffect(() => {
+    // Source: https://reactnavigation.org/docs/use-is-focused/
+    /* Got some problems when I tried to use props as confirmEventAdded or similar,
+     but I ran into many problems so I found another solution. It checks if the tab
+      is focused and will do call to api */
+    if (isTabFocused) {
+      getFavouriteEventsFromApi();
+    }
+  }, [isTabFocused]);
 
   // Return ----------------------------------
   return (
@@ -101,14 +93,22 @@ export default function ProfileTab() {
           ),
         }}
       />
-      <View style={{margin: 10, borderWidth: 1, borderColor: Colors.mainColor, padding: 16, borderRadius: 16}}>
-        
-        <Text style={{ textAlign: "center", fontSize:30 }}>
+      <View
+        style={{
+          margin: 10,
+          borderWidth: 1,
+          borderColor: Colors.mainColor,
+          padding: 16,
+          borderRadius: 16,
+        }}
+      >
+        <Text style={{ textAlign: "center", fontSize: 30 }}>
           Brukernavn: {user?.displayName}
         </Text>
-        <Text style={{ textAlign: "center" ,fontSize: 18 }}>Epost: {user?.email}</Text>
+        <Text style={{ textAlign: "center", fontSize: 18 }}>
+          Epost: {user?.email}
+        </Text>
       </View>
-
       <Text
         style={{
           textAlign: "center",
@@ -119,7 +119,6 @@ export default function ProfileTab() {
       >
         Mine favoritt dugnader
       </Text>
-
       {checkIfFavoritesExistList()}
     </View>
   );

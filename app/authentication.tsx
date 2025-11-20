@@ -1,3 +1,5 @@
+//
+//
 // Authentication with login and register user
 // Login with google only works on iOS and not web
 
@@ -18,11 +20,11 @@ import {
 
 // ----------------------------------
 const Authentication = () => {
+  // Variables
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignedUp, setIsSignedUp] = useState(true);
-  
 
   const { signIn, createUser } = useAuthSession();
 
@@ -135,7 +137,8 @@ const Authentication = () => {
     </View>
   );
 };
-// ----------------------------------
+
+// Export ----------------------------------
 export default Authentication;
 
 // Style ----------------------------------
@@ -159,9 +162,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
-
-
-
   textField: {
     padding: 8,
     margin: 8,

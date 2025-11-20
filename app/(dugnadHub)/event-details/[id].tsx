@@ -12,7 +12,6 @@ import { EventData } from "@/types/event";
 import { UserData } from "@/types/user";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-
 import {
   ActivityIndicator,
   Alert,
@@ -45,7 +44,6 @@ export default function EventDetails() {
 
   function manageParticipantsButton() {
     const isParticipating = event?.participants.includes(user?.uid ?? "") ?? [];
-
     if (isParticipating) {
       return (
         <Pressable
@@ -235,6 +233,7 @@ export default function EventDetails() {
   );
 }
 
+// Style ----------------------------------
 const style = StyleSheet.create({
   image: {
     height: 300,

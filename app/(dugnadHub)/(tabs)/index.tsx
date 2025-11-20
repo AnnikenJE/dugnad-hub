@@ -43,10 +43,9 @@ export default function HomeTab() {
     const events = await eventApi.getSearchedEvents(searchtext);
     setEvents(events);
     setIsRefreshing(false);
-    console.log(events)
   }
 
-  //UseEffect
+  //UseEffects
   useEffect(() => {
     const delay = setTimeout(() => {
       getSearchResults();
@@ -55,7 +54,6 @@ export default function HomeTab() {
   }, [searchtext]);
 
   useEffect(() => {
-
     getEventsFromApi();
   }, []);
 
@@ -120,7 +118,6 @@ export default function HomeTab() {
         }
         renderItem={(event) => <Event eventData={event.item}></Event>}
       ></FlatList>
-
       {/* Modal */}
       <EventFormModal
         isVisible={isModalVisible}

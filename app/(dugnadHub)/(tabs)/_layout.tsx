@@ -9,6 +9,7 @@ import { Tabs } from "expo-router";
 
 // ----------------------------------
 export default function TabBar() {
+  // Return ----------------------------------
   return (
     <Tabs
       screenOptions={{
