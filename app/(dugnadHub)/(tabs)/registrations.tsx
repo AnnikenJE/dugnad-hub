@@ -121,8 +121,9 @@ export default function RegistrationsTab() {
      but I ran into many problems so I found another solution. It checks if the tab
       is focused and will do call if it */
       getUserMadeEventsFromApi();
+      setIsShowingMadeByUser(true)
     }
-  }, []);
+  }, [isTabFocused]);
 
   //  Return ----------------------------------
   return (
