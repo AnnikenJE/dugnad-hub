@@ -7,6 +7,7 @@ import * as eventApi from "@/api/eventApi";
 import Event from "@/components/Event";
 import { useAuthSession } from "@/providers/authctx";
 import { Colors } from "@/styles/colors";
+import { Styles } from "@/styles/componentStyle";
 import { EventData } from "@/types/event";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -48,7 +49,7 @@ export default function RegistrationsTab() {
     if (events.length === 0) {
       return (
         <View>
-          <Text>Ingen eventer.</Text>
+          <Text style={{ textAlign: "center" }}>Ingen dugnader.</Text>
         </View>
       );
     } else {
@@ -74,15 +75,16 @@ export default function RegistrationsTab() {
   function showUserMadeEvents() {
     return (
       <Pressable
+        style={[Styles.button, { backgroundColor: Colors.gray }]}
         onPress={() => {
           getUserMadeEventsFromApi();
           setIsShowingMadeByUser(true);
-          console.log("fefe");
         }}
       >
         <Text
           style={{
-            color: Colors.mainColor,
+            textAlign: "center",
+            color: "white",
             fontWeight: "bold",
           }}
         >
@@ -95,6 +97,7 @@ export default function RegistrationsTab() {
   function showUserEventParticipation() {
     return (
       <Pressable
+        style={[Styles.button, { backgroundColor: Colors.mainColor }]}
         onPress={() => {
           setIsShowingMadeByUser(false);
           getUserParticipatedEventsFromApi();
@@ -102,7 +105,8 @@ export default function RegistrationsTab() {
       >
         <Text
           style={{
-            color: Colors.gray,
+            textAlign: "center",
+            color: "white",
             fontWeight: "bold",
           }}
         >
@@ -121,7 +125,7 @@ export default function RegistrationsTab() {
      but I ran into many problems so I found another solution. It checks if the tab
       is focused and will do call if it */
       getUserMadeEventsFromApi();
-      setIsShowingMadeByUser(true)
+      setIsShowingMadeByUser(true);
     }
   }, [isTabFocused]);
 
@@ -156,7 +160,7 @@ export default function RegistrationsTab() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     width: "100%",
     paddingTop: 40,
   },

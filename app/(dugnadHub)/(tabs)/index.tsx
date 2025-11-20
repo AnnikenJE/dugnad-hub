@@ -43,10 +43,9 @@ export default function HomeTab() {
     const events = await eventApi.getSearchedEvents(searchtext);
     setEvents(events);
     setIsRefreshing(false);
+    console.log(events)
   }
 
-
-  
   //UseEffect
   useEffect(() => {
     const delay = setTimeout(() => {
@@ -138,7 +137,7 @@ export default function HomeTab() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     width: "100%",
   },
 });

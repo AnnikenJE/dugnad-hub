@@ -56,7 +56,7 @@ export default function ProfileTab() {
     if (events.length === 0) {
       return (
         <View>
-          <Text>Ingen eventer.</Text>
+          <Text style={{ textAlign: "center" }}>Ingen dugnader.</Text>
         </View>
       );
     } else {
@@ -77,7 +77,7 @@ export default function ProfileTab() {
 
   // Return ----------------------------------
   return (
-    <View style={styles.mainContainer}>
+    <View >
       <Stack.Screen
         options={{
           headerRight: () => (
@@ -101,10 +101,9 @@ export default function ProfileTab() {
           ),
         }}
       />
-      <Text>{user?.displayName}</Text>
-      <Text>{user?.email}</Text>
-      <Text>Mine favoritt dugnader</Text>
-      <Text>Dra listen ned for å laste inn på nytt.</Text>
+      <Text style={{ textAlign: "center" }}>{user?.displayName}</Text>
+      <Text style={{ textAlign: "center" }}>{user?.email}</Text>
+      <Text style={{ textAlign: "center" }}>Mine favoritt dugnader</Text>
 
       {checkIfFavoritesExistList()}
     </View>
@@ -115,6 +114,7 @@ export default function ProfileTab() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    alignItems: "center"
   },
 });

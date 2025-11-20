@@ -121,6 +121,7 @@ export async function removeUseFromEvent(userId: string, eventId: string) {
 export async function getSearchedEvents(search: string) {
   try {
     const endTerm = search + "\uf8ff";
+    console.log(search);
     const querySnapshot = await getDocs(
       query(
         collection(db, "events"),
