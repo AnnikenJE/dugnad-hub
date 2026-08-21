@@ -42,3 +42,13 @@ firebaseConfig.js
 GoogleService-Info.plist
 ios/
 android/
+
+# Firebase (Android)
+google-services.json
+
+# env
+.env
+
+# Windows
+Thumbs.db
+desktop.ini
