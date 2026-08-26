@@ -4,12 +4,12 @@ A cross-platform app for organizing and coordinating volunteer activities (*dugn
 
 ## Features
 
-- **Browse** — feed of all dugnader with title search and pull-to-refresh
-- **Create** — form modal for title, description, address, tasks, category, date, time and participant limit
-- **Photos** — pick an image from the library or shoot a new one in-app, uploaded to Firebase Storage
-- **Participate** — sign up for a dugnad or withdraw again
-- **My dugnader** — toggle between events you created and events you joined
-- **Favourites** — save dugnader to your profile for later
+- **Browse:** feed of all dugnader with title search and pull-to-refresh
+- **Create:** form modal for title, description, address, tasks, category, date, time and participant limit
+- **Photos:** pick an image from the library or shoot a new one in-app, uploaded to Firebase Storage
+- **Participate:** sign up for a dugnad or withdraw again
+- **My dugnader:** toggle between events you created and events you joined
+- **Favourites:** save dugnader to your profile for later
 - Email/password and Google Sign-In, with session state shared through an auth context
 
 ## Tech Stack
@@ -39,14 +39,14 @@ types/                    EventData and UserData interfaces
 styles/                   Shared colors and component styles
 ```
 
-Screens never talk to Firebase directly — every read and write goes through a function in `api/`, which returns plain typed objects.
+Screens never talk to Firebase directly, every read and write goes through a function in `api/`, which returns plain typed objects.
 
 The user interface is in Norwegian; code, comments and documentation are in English.
 
 **Firestore collections**
 
-- `events` — one document per dugnad, holding `authorId`, `participants[]` and the image download URL
-- `users` — one document per user, holding `name` and `favourites[]`
+- `events`: one document per dugnad, holding `authorId`, `participants[]` and the image download URL
+- `users`: one document per user, holding `name` and `favourites[]`
 
 ## Getting Started
 
@@ -78,7 +78,7 @@ npm run lint     # ESLint
 
 ## Background
 
-Originally built as the exam project for **Cross Platform (7.5 ECTS)** — Kristiania University College, graded **B**.
+Originally built as the exam project for **Cross Platform (7.5 ECTS)**, Kristiania University College, graded **B**.
 
 All code is handwritten.
 AI is only used to help write the README and commit messages.
