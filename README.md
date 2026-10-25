@@ -2,6 +2,13 @@
 
 A cross-platform app for organizing and coordinating volunteer activities (*dugnader*). Users can create a dugnad with a photo, browse and search what others have posted, sign up as a participant, and keep track of their own events and favourites. Built with React Native and Expo Router on top of Firebase, targeting iOS and web.
 
+## Background
+
+Originally built as the exam project for **Cross Platform (7.5 ECTS)**, Kristiania University College, graded **B**.
+
+All code is handwritten.
+AI is only used to help write the README and commit messages.
+
 ## Features
 
 - **Browse:** feed of all dugnader with title search and pull-to-refresh
@@ -75,10 +82,3 @@ npm run ios      # run on iOS
 npm run web      # run in the browser
 npm run lint     # ESLint
 ```
-
-## Background
-
-Originally built as the exam project for **Cross Platform (7.5 ECTS)**, Kristiania University College, graded **B**.
-
-All code is handwritten.
-AI is only used to help write the README and commit messages.
